@@ -1,0 +1,16 @@
+###
+### db_nk_buffer_cache
+###
+
+* Controls what size of data blocks are to be fetched from datafiles to buffer cache
+* the parameter is put into effect vi parameter db_nk_buffer_cache and now downtime is required.
+(n=2,4,8,16,32)
+* the buffer size specified in db_nk_buffer_cache is dedicated and not stealed by other components
+* mendatory to set when tablespace with non-standard data block size are to be created.
+* Operating system-specific block size restrictions apply.
+* Should be set with proper understanding of application and data otherwise may lead to wastage of buffer
+
+--the value for n>8 is good for OLAP and batch processing systems.
+--with n>8 data transfer to memory are faster
+--with n>8 less probability of chained and migrated rows 
+--with n>8 good for sequential access, or very large rows
