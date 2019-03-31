@@ -11,6 +11,6 @@
 * Should be set with proper understanding of application and data otherwise may lead to wastage of buffer
 
 --the value for n>8 is good for OLAP and batch processing systems.
---with n>8 data transfer to memory are faster
+--with n>8 data transfer to memory are faster (blocks with 16k or 32k are directly fetched into memory) 
 --with n>8 less probability of chained and migrated rows 
 --with n>8 good for sequential access, or very large rows
