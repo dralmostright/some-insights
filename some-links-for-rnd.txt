@@ -1,3 +1,4 @@
 http://www.aioug.org/sangam14/images/Sangam14/Presentations/201461_Hussain_ppt.pdf
 https://docs.oracle.com/database/121/VLDBG/GUID-FA70B6EF-0C8B-435B-98C9-CDEBCDCED145.htm#VLDBG1576
 https://www.oracle.com/technetwork/database/bi-datawarehousing/twp-parallel-execution-fundamentals-133639.pdf
+https://www.oracle.com/technetwork/database/bi-datawarehousing/twp-bidw-parallel-execution-130766.pdf
