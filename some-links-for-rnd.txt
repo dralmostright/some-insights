@@ -4,3 +4,5 @@ https://www.oracle.com/technetwork/database/bi-datawarehousing/twp-parallel-exec
 https://www.oracle.com/technetwork/database/bi-datawarehousing/twp-bidw-parallel-execution-130766.pdf
 https://docs.oracle.com/en/database/oracle/oracle-database/12.2/vldbg/vldb-backup.html#GUID-8B6DB99C-5265-480B-B227-DBCFBCBD4D98
 Guidelines When Using ZFS Storage in an Exadata Environment (Doc ID 2087231.1)
+Oracle Exadata Initialization Parameters and Diskgroup Attributes Best Practices (Doc ID 2062068.1)
+Oracle Exadata Database Machine Setup/Configuration Best Practices (Doc ID 1274318.1)
