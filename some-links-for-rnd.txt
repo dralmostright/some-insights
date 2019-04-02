@@ -3,3 +3,4 @@ https://docs.oracle.com/database/121/VLDBG/GUID-FA70B6EF-0C8B-435B-98C9-CDEBCDCE
 https://www.oracle.com/technetwork/database/bi-datawarehousing/twp-parallel-execution-fundamentals-133639.pdf
 https://www.oracle.com/technetwork/database/bi-datawarehousing/twp-bidw-parallel-execution-130766.pdf
 https://docs.oracle.com/en/database/oracle/oracle-database/12.2/vldbg/vldb-backup.html#GUID-8B6DB99C-5265-480B-B227-DBCFBCBD4D98
+Guidelines When Using ZFS Storage in an Exadata Environment (Doc ID 2087231.1)
