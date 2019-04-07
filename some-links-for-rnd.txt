@@ -6,3 +6,4 @@ https://docs.oracle.com/en/database/oracle/oracle-database/12.2/vldbg/vldb-backu
 Guidelines When Using ZFS Storage in an Exadata Environment (Doc ID 2087231.1)
 Oracle Exadata Initialization Parameters and Diskgroup Attributes Best Practices (Doc ID 2062068.1)
 Oracle Exadata Database Machine Setup/Configuration Best Practices (Doc ID 1274318.1)
+How to Identify ORA-00060 Deadlock Types Using Deadlock Graphs in Trace (Doc ID 1507093.1)
