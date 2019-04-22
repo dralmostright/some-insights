@@ -8,3 +8,4 @@ Oracle Exadata Initialization Parameters and Diskgroup Attributes Best Practices
 Oracle Exadata Database Machine Setup/Configuration Best Practices (Doc ID 1274318.1)
 How to Identify ORA-00060 Deadlock Types Using Deadlock Graphs in Trace (Doc ID 1507093.1)
 http://arup.blogspot.com/2013/04/application-design-is-only-reason-for.html
+https://www.dba.bg/forum/oracle-rdbms-server/server-database-administration/exadata
