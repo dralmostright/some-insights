@@ -1,0 +1,253 @@
+      groupadd -g 501 oinstall
+      groupadd -g 502 dba
+      groupadd -g 503 oper
+      groupadd -g 504 asmadmin
+      groupadd -g 505 asmdba
+      groupadd -g 506 asmoper
+      useradd -g oinstall  -G dba,oper,asmdba,asmadmin oracle
+      useradd -g oinstall  -G asmadmin,asmdba,asmoper,dba grid
+
+	  rm /u01/app/11.2.0.4/grid
+      mkdir -p /u01/app/12.2.0.1/grid
+      mkdir -p /u01/app/oraInventory
+      mkdir -p /u01/app/grid
+      mkdir -p /u01/app/oracle/product/12.2.0.1/db_1
+      chown -R grid:oinstall /u01/app
+      chown -R grid:oinstall /u01/app/12.2.0.1/grid
+      chown -R grid:oinstall /u01/app/oraInventory
+      chown -R oracle:oinstall /u01/app/oracle
+      chmod -R 775 /u01/app/grid
+      chmod -R 775 /u01/app/oracle
+	  chmod -R 775 /u01
+
+
+	  mkdir -p /u01/app/oracle
+	  mkdir -p /u01/app/oracle/product/12.2.0.1/db_1
+	  mkdir -p /u01/app/oraInventory
+	  chown -R oracle:oinstall /u01/app
+	  chmod -R 775 /u01/app/oracle
+	  
+ssh 192.168.176.131
+ssh 192.168.176.132
+
+service iscsid force-start
+
+iqn.2006-01.com.openfiler:ggdb-asm01
+iqn.2006-01.com.openfiler:ggdb-asm02
+iqn.2006-01.com.openfiler:ggdb-asm03
+
+
+iscsiadm -m node -T iqn.2006-01.com.openfiler:ggdb-asm01  -p 192.168.176.11 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:ggdb-asm02  -p 192.168.176.11 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:ggdb-asm03  -p 192.168.176.11 -l
+
+iscsiadm -m node -T iqn.2006-01.com.openfiler:ggdb-asm01 -p 192.168.176.10 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:ggdb-asm02 -p 192.168.176.10 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:ggdb-asm03 -p 192.168.176.10 --op update -n node.startup -v automatic
+
+
+iscsiadm -m discovery -t sendtargets -p 192.168.176.10
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb-crs1 -p 192.168.179.112 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb-crs1 -p 192.168.179.112 --op update -n node.startup -v automatic
+
+[root@gg1 ~]# iscsiadm -m discovery -t sendtargets -p 192.168.176.10
+192.168.176.10:3260,1 iqn.2006-01.com.openfiler:ggdb-asm03
+192.168.176.10:3260,1 iqn.2006-01.com.openfiler:ggdb-asm02
+192.168.176.10:3260,1 iqn.2006-01.com.openfiler:ggdb-asm01
+[root@gg1 ~]# 
+
+
+[root@gg1 ~]# fdisk -l
+
+Disk /dev/sda: 107.4 GB, 107374182400 bytes
+255 heads, 63 sectors/track, 13054 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x000ac904
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1               1        2581    20725760   8e  Linux LVM
+/dev/sda2            2581        5161    20725760   8e  Linux LVM
+/dev/sda3            5161        7741    20725760   8e  Linux LVM
+/dev/sda4            7741       13055    42679296    5  Extended
+/dev/sda5   *        7742        9016    10240000   83  Linux
+/dev/sda6            9017        9552     4300800   82  Linux swap / Solaris
+
+Disk /dev/mapper/vol_archive-log_archive: 21.2 GB, 21218983936 bytes
+255 heads, 63 sectors/track, 2579 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+
+Disk /dev/mapper/vol_oradata-log_oradata: 21.2 GB, 21218983936 bytes
+255 heads, 63 sectors/track, 2579 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+
+Disk /dev/mapper/vol_u01-log_u01: 21.2 GB, 21218983936 bytes
+255 heads, 63 sectors/track, 2579 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+
+Disk /dev/sdb: 42.9 GB, 42949672960 bytes
+64 heads, 32 sectors/track, 40960 cylinders
+Units = cylinders of 2048 * 512 = 1048576 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+
+Disk /dev/sdc: 16.1 GB, 16106127360 bytes
+64 heads, 32 sectors/track, 15360 cylinders
+Units = cylinders of 2048 * 512 = 1048576 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+
+Disk /dev/sdd: 16.1 GB, 16106127360 bytes
+64 heads, 32 sectors/track, 15360 cylinders
+Units = cylinders of 2048 * 512 = 1048576 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x00000000
+
+[root@gg1 ~]# 
+
+[root@gg1 ~]#  ls -l /dev/disk/by-path/*ggdb*
+lrwxrwxrwx 1 root root 9 Apr 25 04:54 /dev/disk/by-path/ip-192.168.176.10:3260-iscsi-iqn.2006-01.com.openfiler:ggdb-asm01-lun-0 -> ../../sdb
+lrwxrwxrwx 1 root root 9 Apr 25 04:54 /dev/disk/by-path/ip-192.168.176.10:3260-iscsi-iqn.2006-01.com.openfiler:ggdb-asm02-lun-0 -> ../../sdc
+lrwxrwxrwx 1 root root 9 Apr 25 04:54 /dev/disk/by-path/ip-192.168.176.10:3260-iscsi-iqn.2006-01.com.openfiler:ggdb-asm03-lun-0 -> ../../sdd
+[root@gg1 ~]# 
+
+[root@12cnode1 ~]# for FILE in `find /dev -name "sd*" | sort`
+do
+  WWID=`/lib/udev/scsi_id --whitelisted --replace-whitespace --device=$FILE `
+  echo $FILE " WWID:  "  $WWID
+done
+
+[root@gg1 ~]# for FILE in `find /dev -name "sd*" | sort`
+> do
+>   WWID=`/lib/udev/scsi_id --whitelisted --replace-whitespace --device=$FILE `
+>   echo $FILE " WWID:  "  $WWID
+> done
+/dev/sda  WWID:  
+/dev/sda1  WWID:  
+/dev/sda2  WWID:  
+/dev/sda3  WWID:  
+/dev/sda4  WWID:  
+/dev/sda5  WWID:  
+/dev/sda6  WWID:  
+/dev/sdb  WWID:   14f504e46494c4500694f384d55592d663671332d76574734
+/dev/sdc  WWID:   14f504e46494c45004e46353932502d3948536b2d7a793657
+/dev/sdd  WWID:   14f504e46494c4500633468786a4a2d70516e362d36744275
+[root@gg1 ~]# 
+
+14f504e46494c4500694f384d55592d663671332d76574734 - ggdbs_ocr01
+14f504e46494c45004e46353932502d3948536b2d7a793657 -- ggdbs_data01
+14f504e46494c4500633468786a4a2d70516e362d36744275 -- ggdbs_reco01
+
+
+[root@12cnode1 mapper]# cat /etc/multipath.conf
+defaults {
+   find_multipaths       yes
+   user_friendly_names   yes
+}
+
+blacklist {
+    wwid "*"
+}
+blacklist_exceptions {
+    wwid "14f504e46494c4500694f384d55592d663671332d76574734"
+    wwid "14f504e46494c45004e46353932502d3948536b2d7a793657"
+    wwid "14f504e46494c4500633468786a4a2d70516e362d36744275"
+}
+
+multipaths {
+        multipath {
+        wwid 14f504e46494c4500694f384d55592d663671332d76574734
+        alias ggdbs_ocr01
+        }
+        multipath {
+        wwid 14f504e46494c45004e46353932502d3948536b2d7a793657
+        alias ggdbs_data01
+        }
+        multipath {
+        wwid 14f504e46494c4500633468786a4a2d70516e362d36744275
+        alias ggdbs_reco01
+        }
+}
+[root@12cnode1 mapper]# 
+
+
+[root@gg1 mapper]# ls -ltr
+total 0
+crw-rw---- 1 root root 10, 236 Apr 25 05:20 control
+lrwxrwxrwx 1 root root       7 Apr 25 05:20 vol_archive-log_archive -> ../dm-0
+lrwxrwxrwx 1 root root       7 Apr 25 05:20 vol_oradata-log_oradata -> ../dm-1
+lrwxrwxrwx 1 root root       7 Apr 25 05:20 vol_u01-log_u01 -> ../dm-2
+lrwxrwxrwx 1 root root       7 Apr 25 05:21 ggdbs_ocr01 -> ../dm-5
+lrwxrwxrwx 1 root root       7 Apr 25 05:21 ggdbs_reco01 -> ../dm-3
+lrwxrwxrwx 1 root root       7 Apr 25 05:21 ggdbs_data01 -> ../dm-4
+[root@gg1 mapper]# 
+
+
+parted /dev/mapper/ggdbs_ocr01 mklabel gpt mkpart primary "1 -1"
+parted /dev/mapper/ggdbs_reco01 mklabel gpt mkpart primary "1 -1"
+parted /dev/mapper/ggdbs_data01 mklabel gpt mkpart primary "1 -1"
+
+for i in racvg_ocr01 ggdbs_ocr01 ggdbs_reco01 ggdbs_data01; do
+printf "%s %s\n" "$i" "$(udevadm info --query=all --name=/dev/mapper/$i |
+grep -i dm_uuid)"; done
+
+[root@gg1 mapper]# for i in racvg_ocr01 ggdbs_ocr01 ggdbs_reco01 ggdbs_data01; do
+> printf "%s %s\n" "$i" "$(udevadm info --query=all --name=/dev/mapper/$i |
+> grep -i dm_uuid)"; done
+device node not found
+racvg_ocr01 
+ggdbs_ocr01 E: DM_UUID=mpath-14f504e46494c4500694f384d55592d663671332d76574734
+ggdbs_reco01 E: DM_UUID=mpath-14f504e46494c4500633468786a4a2d70516e362d36744275
+ggdbs_data01 E: DM_UUID=mpath-14f504e46494c45004e46353932502d3948536b2d7a793657
+[root@gg1 mapper]# 
+
+
+[root@12cnode1 rules.d]# cat 99-oracle-asmdevices.rules 
+KERNEL=="dm-*",ENV{DM_UUID}=="mpath-14f504e46494c4500694f384d55592d663671332d76574734",OWNER="grid",GROUP="asmadmin",MODE="0660"
+KERNEL=="dm-*",ENV{DM_UUID}=="mpath-14f504e46494c4500633468786a4a2d70516e362d36744275",OWNER="grid",GROUP="asmadmin",MODE="0660"
+KERNEL=="dm-*",ENV{DM_UUID}=="mpath-14f504e46494c45004e46353932502d3948536b2d7a793657",OWNER="grid",GROUP="asmadmin",MODE="0660"
+
+[root@gg1 rules.d]# for i in ggdbs_ocr01 ggdbs_reco01 ggdbs_data01; do printf "%s %s\n" "$i" "$(ls -ll /dev/mapper/$i)"; done
+ggdbs_ocr01 lrwxrwxrwx 1 root root 7 Apr 25 05:24 /dev/mapper/ggdbs_ocr01 -> ../dm-5
+ggdbs_reco01 lrwxrwxrwx 1 root root 7 Apr 25 05:24 /dev/mapper/ggdbs_reco01 -> ../dm-3
+ggdbs_data01 lrwxrwxrwx 1 root root 7 Apr 25 05:24 /dev/mapper/ggdbs_data01 -> ../dm-4
+[root@gg1 rules.d]# 
+for i in racvg_ocr01p1 racvg_vote01p1 racvg_vote02p1 racvg_vote03p1 racvg_fra01p1 racvg_data01p1 ; do printf "%s %s\n" "$i" "$(ls -ll /dev/mapper/$i)"; done
+for i in ggdbs_ocr01p1 ggdbs_reco01p1 ggdbs_data01p1; do printf "%s %s\n" "$i" "$(ls -ll /dev/mapper/$i)"; done
+
+[root@gg1 rules.d]# for i in ggdbs_ocr01p1 ggdbs_reco01p1 ggdbs_data01p1; do printf "%s %s\n" "$i" "$(ls -ll /dev/mapper/$i)"; done
+ggdbs_ocr01p1 lrwxrwxrwx 1 root root 7 Apr 25 05:24 /dev/mapper/ggdbs_ocr01p1 -> ../dm-6
+ggdbs_reco01p1 lrwxrwxrwx 1 root root 7 Apr 25 05:24 /dev/mapper/ggdbs_reco01p1 -> ../dm-7
+ggdbs_data01p1 lrwxrwxrwx 1 root root 7 Apr 25 05:24 /dev/mapper/ggdbs_data01p1 -> ../dm-8
+[root@gg1 rules.d]# 
+
+udevadm test /sys/block/dm-3
+udevadm test /sys/block/dm-4
+udevadm test /sys/block/dm-5
+
+/u01/app/12.2.0.1/grid/gridSetup.sh -executeConfigTools -responseFile /u01/app/12.2.0.1/grid/install/response/gridinstall.rsp
+
+
+/u01/app/12.2.0.1/grid/gridSetup.sh -executeConfigTools -responseFile /u01/app/12.2.0.1/grid/install/response/gridinstall.rsp
+
+oracle.assistants.asm|S_ASMPASSWORD=sysasm123
+oracle.assistants.asm|S_ASMMONITORPASSWORD=sysasm123
+oracle.crs|S_BMCPASSWORD=sysasm123
