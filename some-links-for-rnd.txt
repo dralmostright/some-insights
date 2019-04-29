@@ -9,3 +9,8 @@ Oracle Exadata Database Machine Setup/Configuration Best Practices (Doc ID 12743
 How to Identify ORA-00060 Deadlock Types Using Deadlock Graphs in Trace (Doc ID 1507093.1)
 http://arup.blogspot.com/2013/04/application-design-is-only-reason-for.html
 https://www.dba.bg/forum/oracle-rdbms-server/server-database-administration/exadata
+AN EXAMPLE OF A COMPLEX ONLINE TABLE REDEFINITION (DBMS_REDEFINITION) (Doc ID 1358236.1)
+How To Do Table Redefinition For Partition Activity using DBMS_REDEFINITION (Doc ID 2144305.1)
+Master Note:Overview of Online Redefinition of Tables (DBMS_REDEFINITION) (Doc ID 1357825.1)
+DBMS_REDEFINITION: Case Study for a Large Non-Partition Table to a Partition Table with Online Transactions Occuring (Doc ID 1481558.1)
+How To Partition Existing Table Using DBMS_REDEFINITION (Doc ID 472449.1)
