@@ -14,3 +14,4 @@ How To Do Table Redefinition For Partition Activity using DBMS_REDEFINITION (Doc
 Master Note:Overview of Online Redefinition of Tables (DBMS_REDEFINITION) (Doc ID 1357825.1)
 DBMS_REDEFINITION: Case Study for a Large Non-Partition Table to a Partition Table with Online Transactions Occuring (Doc ID 1481558.1)
 How To Partition Existing Table Using DBMS_REDEFINITION (Doc ID 472449.1)
+https://docs.oracle.com/cd/B10501_01/server.920/a96533/hintsref.htm
