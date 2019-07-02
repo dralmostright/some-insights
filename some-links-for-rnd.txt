@@ -16,3 +16,16 @@ DBMS_REDEFINITION: Case Study for a Large Non-Partition Table to a Partition Tab
 How To Partition Existing Table Using DBMS_REDEFINITION (Doc ID 472449.1)
 https://docs.oracle.com/cd/B10501_01/server.920/a96533/hintsref.htm
 https://nguimzacy.wordpress.com/2017/08/21/tde-implementation-on-2-nodes-12c-rac-database-keystore-location-is-asm-disk-group/
+
+=== wallet commands
+select wrl_type, wrl_parameter, status from v$encryption_wallet;
+administer key management create keystore '<key_loc> identified by passwd;
+administer key management set keystore open identified by passwd;
+administer key management set key identified by passwd with backup usiing 'fresh_backup';
+select wrl_type, wrl_parameter, status from v$encryption_wallet;
+--change password
+administer key management alter keystore password identified by passwd set welcome123 with backup using	'password_change';
+--backup wallet
+administer key management backup keystore using 'new_backup' identified by welcome123 to '<backup_loc>';
+--create auto login
+administer key management create auto_login keystore from keystore '<key_loc>' identified by welcome123;
