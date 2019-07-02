@@ -15,3 +15,4 @@ Master Note:Overview of Online Redefinition of Tables (DBMS_REDEFINITION) (Doc I
 DBMS_REDEFINITION: Case Study for a Large Non-Partition Table to a Partition Table with Online Transactions Occuring (Doc ID 1481558.1)
 How To Partition Existing Table Using DBMS_REDEFINITION (Doc ID 472449.1)
 https://docs.oracle.com/cd/B10501_01/server.920/a96533/hintsref.htm
+https://nguimzacy.wordpress.com/2017/08/21/tde-implementation-on-2-nodes-12c-rac-database-keystore-location-is-asm-disk-group/
