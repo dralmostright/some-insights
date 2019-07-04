@@ -29,3 +29,5 @@ administer key management alter keystore password identified by passwd set welco
 administer key management backup keystore using 'new_backup' identified by welcome123 to '<backup_loc>';
 --create auto login
 administer key management create auto_login keystore from keystore '<key_loc>' identified by welcome123;
+
+https://blog.dbi-services.com/how-to-fix-your-own-sql-plan-in-oracle/
