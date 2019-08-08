@@ -31,3 +31,12 @@ administer key management backup keystore using 'new_backup' identified by welco
 administer key management create auto_login keystore from keystore '<key_loc>' identified by welcome123;
 
 https://blog.dbi-services.com/how-to-fix-your-own-sql-plan-in-oracle/
+
+=== Compression
+How to Use DBMS_COMPRESSION.GET_COMPRESSION_RATIO in 12c (Doc ID 1589879.1)
+Compression Advisory in 11GR2: Using DBMS_COMPRESSION (Doc ID 762974.1)
+White Papers for Data Warehousing Components in the Oracle Database (Doc ID 1329441.1)
+https://blog.toadworld.com/2017/04/12/oracle-compressed-tables
+https://www.oracle.com/a/tech/docs/advanced-compression-poc-insights.pdf
+https://www.oracle.com/technetwork/database/options/compression/advanced-compression-datasheet-134474.pdf
+Master Note for OLTP Compression (Doc ID 1223705.1)
