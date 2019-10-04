@@ -1,0 +1,1848 @@
+Prepare the disks
+=================
+racdb-crs1
+
+mig-racdb-crs1
+mig-racdb-data1
+mig-racdb-fra1
+mig-racdb-arch1
+mig-racdb-arch2
+mig-racdb-vote-1
+mig-racdb-vote-2
+mig-racdb-vote-3
+mig-racdb-data2
+mig-racdb.arch3
+
+racdb-crs1	For CRS and Voting disk	2048 MB	iSCSI	Not applicable	Not applicable	Not applicable	In use	Edit	Create
+racdb-data1	For datafiles.	5120 MB	iSCSI	Not applicable	Not applicable	Not applicable	In use	Edit	Create
+racdb-fra1	For recovery and other	2048 MB	iSCSI	Not applicable	Not applicable	Not applicable	In use	Edit	Create
+racdb-arch1	for archive logs	1024 MB	iSCSI	Not applicable	Not applicable	Not applicable	In use	Edit	Create
+racdb-arch2	For acfs and testing	1024 MB	iSCSI	Not applicable	Not applicable	Not applicable	In use	Edit	Create
+vote-1	for voting	1024 MB	iSCSI	Not applicable	Not applicable	Not applicable	In use	Edit	Create
+vote-2	for voting	1024 MB	iSCSI	Not applicable	Not applicable	Not applicable	In use	Edit	Create
+vote-3	for voting 3	1024 MB	iSCSI	Not applicable	Not applicable	Not applicable	In use	Edit	Create
+racdb-data2	For DATA files	3072 MB	iSCSI	Not applicable	Not applicable	Not applicable	In use	Edit	Create
+racdb.arch3	for asm disk	2048 MB	iSCSI	Not applicable	Not applicable	Not applicable	In use	Edit	Create
+
+
+iqn.2006-01.com.openfiler:racdb-fra1
+
+iqn.2006-01.com.openfiler:mig-racdb-crs1
+iqn.2006-01.com.openfiler:mig-racdb-data1
+iqn.2006-01.com.openfiler:mig-racdb-fra1
+iqn.2006-01.com.openfiler:mig-racdb-arch1
+iqn.2006-01.com.openfiler:mig-racdb-arch2
+iqn.2006-01.com.openfiler:mig-racdb-vote-1
+iqn.2006-01.com.openfiler:mig-racdb-vote-2
+iqn.2006-01.com.openfiler:mig-racdb-vote-3
+iqn.2006-01.com.openfiler:mig-racdb-data2
+iqn.2006-01.com.openfiler:mig-racdb.arch3
+
+
+[root@node1 ~]# iscsiadm -m discovery -t sendtargets -p 192.168.179.141
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-vote-2
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-vote-3
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-fra1
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-data1
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-arch2
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-crs1
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-vote-1
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-arch1
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb.arch3
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-data2
+[root@node1 ~]#
+[root@node1 ~]# iscsiadm -m discovery -t sendtargets -p 192.168.179.112
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb-data2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.data1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-3
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch3
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.crs1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.fra1
+[root@node1 ~]#
+
+
+
+
+[root@node2 ~]# iscsiadm -m discovery -t sendtargets -p 192.168.179.141
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-vote-2
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-vote-3
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-fra1
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-data1
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-arch2
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-crs1
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-vote-1
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-arch1
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb.arch3
+192.168.179.141:3260,1 iqn.2006-01.com.openfiler:mig-racdb-data2
+[root@node2 ~]#
+[root@node2 ~]# iscsiadm -m discovery -t sendtargets -p 192.168.179.112
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb-data2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.data1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-3
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch3
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.crs1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.fra1
+[root@node2 ~]#
+
+
+
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.crs1 -p 192.168.179.112 -l
+
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-2 -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-3 -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-fra1   -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data1  -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch2  -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-crs1   -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-1 -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch1  -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb.arch3  -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data2  -p 192.168.179.141 -l
+
+
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-2 -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-fra1   -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-vote-2, portal: 192.168.179.141,3260]
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data1  -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch2  -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-crs1   -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-1 -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch1  -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb.arch3  -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data2  -p 192.168.179.141 -lLogin to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-vote-2, portal: 192.168.179.141,3260]: successful
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-3 -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-vote-3, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-vote-3, portal: 192.168.179.141,3260]: successful
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-fra1   -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-fra1, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-fra1, portal: 192.168.179.141,3260]: successful
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data1  -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-data1, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-data1, portal: 192.168.179.141,3260]: successful
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch2  -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-arch2, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-arch2, portal: 192.168.179.141,3260]: successful
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-crs1   -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-crs1, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-crs1, portal: 192.168.179.141,3260]: successful
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-1 -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-vote-1, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-vote-1, portal: 192.168.179.141,3260]: successful
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch1  -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-arch1, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-arch1, portal: 192.168.179.141,3260]: successful
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb.arch3  -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb.arch3, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb.arch3, portal: 192.168.179.141,3260]: successful
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data2  -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-data2, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-data2, portal: 192.168.179.141,3260]: successful
+[root@node1 ~]#
+
+
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-2 -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-fra1   -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data1  -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-vote-2, portal: 192.168.179.141,3260]
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch2  -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-crs1   -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-1 -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch1  -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb.arch3  -p 192.168.179.141 -l
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data2  -p 192.168.179.141 -lLogin to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-vote-2, portal: 192.168.179.141,3260]: successful
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-3 -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-vote-3, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-vote-3, portal: 192.168.179.141,3260]: successful
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-fra1   -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-fra1, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-fra1, portal: 192.168.179.141,3260]: successful
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data1  -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-data1, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-data1, portal: 192.168.179.141,3260]: successful
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch2  -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-arch2, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-arch2, portal: 192.168.179.141,3260]: successful
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-crs1   -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-crs1, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-crs1, portal: 192.168.179.141,3260]: successful
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-1 -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-vote-1, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-vote-1, portal: 192.168.179.141,3260]: successful
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch1  -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-arch1, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-arch1, portal: 192.168.179.141,3260]: successful
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb.arch3  -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb.arch3, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb.arch3, portal: 192.168.179.141,3260]: successful
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data2  -p 192.168.179.141 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-data2, portal: 192.168.179.141,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:mig-racdb-data2, portal: 192.168.179.141,3260]: successful
+[root@node2 ~]#
+
+
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.crs1 -p 192.168.2.195 --op update -n node.startup -v automatic
+
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-2 -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-3 -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-fra1   -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data1  -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch2  -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-crs1   -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-1 -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch1  -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb.arch3  -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data2  -p 192.168.179.141 --op update -n node.startup -v automatic
+
+
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-2 -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-fra1   -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data1  -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch2  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-3 -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-fra1   -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data1  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch2  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-crs1   -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-1 -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch1  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb.arch3  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data2  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-fra1   -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data1  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch2  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node1 ~]#
+
+
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-2 -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-fra1   -p 192.168.179.141 --op update -n node.startup -v automatic
+iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data1  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-3 -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-fra1   -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data1  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch2  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-crs1   -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-vote-1 -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-arch1  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb.arch3  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data2  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node2 ~]#
+[root@node2 ~]#
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-fra1   -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:mig-racdb-data1  -p 192.168.179.141 --op update -n node.startup -v automatic
+[root@node2 ~]#
+
+
+[root@node1 iscsi]# pwd
+/dev/iscsi
+[root@node1 iscsi]# ls -ltr
+total 0
+drwxr-xr-x 2 root root 80 Jun  1 18:35 arch1
+drwxr-xr-x 2 root root 80 Jun  1 18:35 data1
+drwxr-xr-x 2 root root 80 Jun  1 18:35 openfiler:racdb-data2
+drwxr-xr-x 2 root root 80 Jun  1 18:35 crs1
+drwxr-xr-x 2 root root 80 Jun  1 18:35 openfiler:racdb:vote-3
+drwxr-xr-x 2 root root 80 Jun  1 18:35 arch2
+drwxr-xr-x 2 root root 80 Jun  1 18:35 fra1
+drwxr-xr-x 2 root root 80 Jun  1 18:35 openfiler:racdb:vote-2
+drwxr-xr-x 2 root root 80 Jun  1 18:35 openfiler:racdb:vote-1
+drwxr-xr-x 2 root root 60 Jun  1 20:16 openfiler:mig-racdb-vote-2
+drwxr-xr-x 2 root root 60 Jun  1 20:16 openfiler:mig-racdb-vote-3
+drwxr-xr-x 2 root root 60 Jun  1 20:16 openfiler:mig-racdb-fra1
+drwxr-xr-x 2 root root 60 Jun  1 20:16 openfiler:mig-racdb-data1
+drwxr-xr-x 2 root root 60 Jun  1 20:16 openfiler:mig-racdb-arch2
+drwxr-xr-x 2 root root 60 Jun  1 20:16 openfiler:mig-racdb-crs1
+drwxr-xr-x 2 root root 60 Jun  1 20:16 openfiler:mig-racdb-vote-1
+drwxr-xr-x 2 root root 60 Jun  1 20:16 openfiler:mig-racdb-arch1
+drwxr-xr-x 2 root root 80 Jun  1 20:16 arch3
+drwxr-xr-x 2 root root 60 Jun  1 20:16 openfiler:mig-racdb-data2
+[root@node1 iscsi]#
+
+
+[root@node2 iscsi]# pwd
+/dev/iscsi
+[root@node2 iscsi]# ls -ltr
+total 0
+drwxr-xr-x 2 root root 80 Jun  1 18:35 arch1
+drwxr-xr-x 2 root root 80 Jun  1 18:35 openfiler:racdb-data2
+drwxr-xr-x 2 root root 80 Jun  1 18:35 data1
+drwxr-xr-x 2 root root 80 Jun  1 18:35 openfiler:racdb:vote-3
+drwxr-xr-x 2 root root 80 Jun  1 18:35 crs1
+drwxr-xr-x 2 root root 80 Jun  1 18:35 openfiler:racdb:vote-2
+drwxr-xr-x 2 root root 80 Jun  1 18:35 openfiler:racdb:vote-1
+drwxr-xr-x 2 root root 80 Jun  1 18:35 fra1
+drwxr-xr-x 2 root root 80 Jun  1 18:35 arch2
+drwxr-xr-x 2 root root 60 Jun  1 20:17 openfiler:mig-racdb-vote-3
+drwxr-xr-x 2 root root 60 Jun  1 20:17 openfiler:mig-racdb-vote-2
+drwxr-xr-x 2 root root 60 Jun  1 20:17 openfiler:mig-racdb-fra1
+drwxr-xr-x 2 root root 60 Jun  1 20:17 openfiler:mig-racdb-data1
+drwxr-xr-x 2 root root 60 Jun  1 20:17 openfiler:mig-racdb-arch2
+drwxr-xr-x 2 root root 60 Jun  1 20:17 openfiler:mig-racdb-crs1
+drwxr-xr-x 2 root root 60 Jun  1 20:17 openfiler:mig-racdb-vote-1
+drwxr-xr-x 2 root root 60 Jun  1 20:17 openfiler:mig-racdb-arch1
+drwxr-xr-x 2 root root 80 Jun  1 20:17 arch3
+drwxr-xr-x 2 root root 60 Jun  1 20:17 openfiler:mig-racdb-data2
+[root@node2 iscsi]#
+
+[root@node1 openfiler:mig-racdb-vote-3]# ls
+part  part1
+[root@node1 openfiler:mig-racdb-vote-3]# pwd
+/dev/iscsi/openfiler:mig-racdb-vote-3
+
+
+[root@node1 openfiler:mig-racdb-vote-2]# pwd
+/dev/iscsi/openfiler:mig-racdb-vote-2
+[root@node1 openfiler:mig-racdb-vote-2]# ls
+part  part1
+[root@node1 openfiler:mig-racdb-vote-2]#
+
+[root@node1 openfiler:mig-racdb-fra1]# pwd
+/dev/iscsi/openfiler:mig-racdb-fra1
+[root@node1 openfiler:mig-racdb-fra1]# ls
+part  part1
+[root@node1 openfiler:mig-racdb-fra1]#
+
+[root@node1 openfiler:mig-racdb-data1]# pwd
+/dev/iscsi/openfiler:mig-racdb-data1
+[root@node1 openfiler:mig-racdb-data1]# ls
+part  part1
+[root@node1 openfiler:mig-racdb-data1]#
+
+[root@node1 openfiler:mig-racdb-arch2]# pwd
+/dev/iscsi/openfiler:mig-racdb-arch2
+[root@node1 openfiler:mig-racdb-arch2]# ls
+part  part1
+[root@node1 openfiler:mig-racdb-arch2]#
+
+[root@node1 openfiler:mig-racdb-crs1]# pwd
+/dev/iscsi/openfiler:mig-racdb-crs1
+[root@node1 openfiler:mig-racdb-crs1]# ls
+part  part1
+[root@node1 openfiler:mig-racdb-crs1]#
+
+[root@node1 openfiler:mig-racdb-arch1]# pwd
+/dev/iscsi/openfiler:mig-racdb-arch1
+[root@node1 openfiler:mig-racdb-arch1]# ls
+part  part1
+[root@node1 openfiler:mig-racdb-arch1]#
+
+[root@node1 openfiler:mig-racdb-data2]# ls
+part  part1
+[root@node1 openfiler:mig-racdb-data2]# pwd
+/dev/iscsi/openfiler:mig-racdb-data2
+[root@node1 openfiler:mig-racdb-data2]#
+
+
+
+fdisk /dev/iscsi/crs1/part
+
+837308.1
+
+
+======== Configure ASM DISKS Permissions/Ownerships
+
+oracleasm createdisk ASMARCH3 /dev/iscsi/arch3/part1
+
+[grid@node1 ~]$ asmcmd lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1640                0            1640              0             N  CRS_VOTE/
+MOUNTED  EXTERN  N         512   4096  1048576      3069      873                0             873              0             N  ORAARCH/
+MOUNTED  EXTERN  N         512   4096  1048576      6138     2714                0            2714              0             N  ORADATA/
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1312                0            1312              0             N  ORAFRA/
+[grid@node1 ~]$
+
+
+[grid@node1 ~]$ sqlplus / as sysasm
+
+SQL*Plus: Release 11.2.0.4.0 Production on Fri Jun 2 16:15:23 2017
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Real Application Clusters and Automatic Storage Management options
+
+SQL> select name, state, total_mb,free_mb from v$asm_diskgroup;
+
+NAME                           STATE         TOTAL_MB    FREE_MB
+------------------------------ ----------- ---------- ----------
+CRS_VOTE                       MOUNTED           2046       1640
+ORAARCH                        MOUNTED           3069        873
+ORADATA                        MOUNTED           6138       2714
+ORAFRA                         MOUNTED           2046       1312
+VOTE_DISK                      DISMOUNTED           0          0
+
+SQL>
+
+
+SQL> select mount_status,header_status,mode_status,state,total_mb,free_mb,name,path,label from v$asm_disk;
+
+MOUNT_S HEADER_STATU MODE_ST STATE      TOTAL_MB    FREE_MB NAME                           PATH                                     LABEL
+------- ------------ ------- -------- ---------- ---------- ------------------------------ ---------------------------------------- -------------------------------
+CLOSED  MEMBER       ONLINE  NORMAL            0          0                                ORCL:ASMVOTE1                            ASMVOTE1
+CLOSED  MEMBER       ONLINE  NORMAL            0          0                                ORCL:ASMVOTE2                            ASMVOTE2
+CLOSED  MEMBER       ONLINE  NORMAL            0          0                                ORCL:ASMVOTE3                            ASMVOTE3
+CACHED  MEMBER       ONLINE  NORMAL         1023        266 ASMARCH1                       ORCL:ASMARCH1                            ASMARCH1
+CACHED  MEMBER       ONLINE  NORMAL         2046        607 ASMARCH3                       ORCL:ASMARCH3                            ASMARCH3
+CACHED  MEMBER       ONLINE  NORMAL         2046       1640 ASMCRS1                        ORCL:ASMCRS1                             ASMCRS1
+CACHED  MEMBER       ONLINE  NORMAL         3069       1338 ASMDATA1                       ORCL:ASMDATA1                            ASMDATA1
+CACHED  MEMBER       ONLINE  NORMAL         3069       1376 ASMDATA2                       ORCL:ASMDATA2                            ASMDATA2
+CACHED  MEMBER       ONLINE  NORMAL         2046       1312 ASMFRA1                        ORCL:ASMFRA1                             ASMFRA1
+
+9 rows selected.
+
+Select a.name, b.name, b.path, b.TOTAL_MB, b.FREE_MB from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+SQL> Select a.name, b.name, b.path, b.TOTAL_MB, b.FREE_MB from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+NAME                           NAME                           PATH                             TOTAL_MB    FREE_MB
+------------------------------ ------------------------------ ------------------------------ ---------- ----------
+VOTE_DISK                                                     ORCL:ASMVOTE1                           0          0
+VOTE_DISK                                                     ORCL:ASMVOTE2                           0          0
+VOTE_DISK                                                     ORCL:ASMVOTE3                           0          0
+ORAARCH                        ASMARCH1                       ORCL:ASMARCH1                        1023        266
+ORAARCH                        ASMARCH3                       ORCL:ASMARCH3                        2046        607
+CRS_VOTE                       ASMCRS1                        ORCL:ASMCRS1                         2046       1640
+ORADATA                        ASMDATA1                       ORCL:ASMDATA1                        3069       1338
+ORADATA                        ASMDATA2                       ORCL:ASMDATA2                        3069       1376
+ORAFRA                         ASMFRA1                        ORCL:ASMFRA1                         2046       1312
+
+9 rows selected.
+
+SQL>
+
+Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+SQL> col "Disk Group" format a20
+SQL> col "Disk Name" format a30
+SQL> col "Disk Path" format a30
+SQL> set lines 222
+SQL> Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+VOTE_DISK                                           ORCL:ASMVOTE1                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE2                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE3                             0 MEMBER
+ORAARCH              ASMARCH1                       ORCL:ASMARCH1                          1023 MEMBER
+ORAARCH              ASMARCH3                       ORCL:ASMARCH3                          2046 MEMBER
+CRS_VOTE             ASMCRS1                        ORCL:ASMCRS1                           2046 MEMBER
+ORADATA              ASMDATA1                       ORCL:ASMDATA1                          3069 MEMBER
+ORADATA              ASMDATA2                       ORCL:ASMDATA2                          3069 MEMBER
+ORAFRA               ASMFRA1                        ORCL:ASMFRA1                           2046 MEMBER
+
+9 rows selected.
+
+SQL>
+
+SQL> Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+VOTE_DISK                                           ORCL:ASMVOTE1                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE2                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE3                             0 MEMBER
+VOTE_DISK                                           ORCL:MIGASMARCH1                          0 PROVISIONED
+VOTE_DISK                                           ORCL:MIGASMARCH3                          0 PROVISIONED
+ORAARCH              ASMARCH1                       ORCL:ASMARCH1                          1023 MEMBER
+ORAARCH              ASMARCH3                       ORCL:ASMARCH3                          2046 MEMBER
+CRS_VOTE             ASMCRS1                        ORCL:ASMCRS1                           2046 MEMBER
+ORADATA              ASMDATA1                       ORCL:ASMDATA1                          3069 MEMBER
+ORADATA              ASMDATA2                       ORCL:ASMDATA2                          3069 MEMBER
+ORAFRA               ASMFRA1                        ORCL:ASMFRA1                           2046 MEMBER
+
+11 rows selected.
+
+
+
+SQL> alter diskgroup ORAARCH add disk 'ORCL:MIGASMARCH1', 'ORCL:MIGASMARCH3' rebalance power 2; 
+
+
+SQL> ! hostname
+node1.localdomain
+
+SQL> alter diskgroup ORAARCH add disk 'ORCL:MIGASMARCH1', 'ORCL:MIGASMARCH3' rebalance power 2;
+
+Diskgroup altered.
+
+SQL> select * from v$asm_operation;
+
+GROUP_NUMBER OPERA STAT      POWER     ACTUAL      SOFAR   EST_WORK   EST_RATE EST_MINUTES ERROR_CODE
+------------ ----- ---- ---------- ---------- ---------- ---------- ---------- ----------- --------------------------------------------
+           2 REBAL RUN           2          2         53        853        527           1
+
+SQL>
+
+SQL> select * from v$asm_operation;
+
+no rows selected
+
+SQL>
+
+
+SQL> Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+VOTE_DISK                                           ORCL:ASMVOTE1                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE2                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE3                             0 MEMBER
+ORAARCH              ASMARCH1                       ORCL:ASMARCH1                          1023 MEMBER
+ORAARCH              ASMARCH3                       ORCL:ASMARCH3                          2046 MEMBER
+CRS_VOTE             ASMCRS1                        ORCL:ASMCRS1                           2046 MEMBER
+ORADATA              ASMDATA1                       ORCL:ASMDATA1                          3069 MEMBER
+ORADATA              ASMDATA2                       ORCL:ASMDATA2                          3069 MEMBER
+ORAFRA               ASMFRA1                        ORCL:ASMFRA1                           2046 MEMBER
+ORAARCH              MIGASMARCH1                    ORCL:MIGASMARCH1                       1023 MEMBER
+ORAARCH              MIGASMARCH3                    ORCL:MIGASMARCH3                       1023 MEMBER
+
+11 rows selected.
+
+SQL>
+
+
+[grid@node1 ~]$ sqlplus / as sysasm
+
+SQL*Plus: Release 11.2.0.4.0 Production on Fri Jun 2 17:02:15 2017
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Real Application Clusters and Automatic Storage Management options
+
+SQL> select name, state, total_mb,free_mb from v$asm_diskgroup;
+
+NAME                           STATE         TOTAL_MB    FREE_MB
+------------------------------ ----------- ---------- ----------
+CRS_VOTE                       MOUNTED           2046       1640
+ORAARCH                        MOUNTED           5115       3843
+ORADATA                        MOUNTED           6138       2714
+ORAFRA                         MOUNTED           2046       1312
+VOTE_DISK                      DISMOUNTED           0          0
+
+SQL>
+
+
+SQL> alter diskgroup ORAARCH drop disk 'ASMARCH1','ASMARCH3' rebalance power 2;
+
+[grid@node1 ~]$ sqlplus / as sysasm
+
+SQL*Plus: Release 11.2.0.4.0 Production on Fri Jun 2 17:04:39 2017
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Real Application Clusters and Automatic Storage Management options
+
+SQL> alter diskgroup ORAARCH drop disk 'ORCL:ASMARCH1','ORCL:ASMARCH3' rebalance power 2;
+alter diskgroup ORAARCH drop disk 'ORCL:ASMARCH1','ORCL:ASMARCH3' rebalance power 2
+*
+ERROR at line 1:
+ORA-15032: not all alterations performed
+ORA-15054: disk "ORCL:ASMARCH3" does not exist in diskgroup "ORAARCH"
+ORA-15054: disk "ORCL:ASMARCH1" does not exist in diskgroup "ORAARCH"
+
+SQL> set lines 222
+SQL> alter diskgroup ORAARCH drop disk 'ASMARCH1','ASMARCH3' rebalance power 2;
+
+Diskgroup altered.
+
+SQL> select * from v$asm_operation;
+
+GROUP_NUMBER OPERA STAT      POWER     ACTUAL      SOFAR   EST_WORK   EST_RATE EST_MINUTES ERROR_CODE
+------------ ----- ---- ---------- ---------- ---------- ---------- ---------- ----------- --------------------------------------------
+           2 REBAL RUN           2          2        101        886        663           1
+
+SQL> ! asmcmd lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1640                0            1640              0             N  CRS_VOTE/
+MOUNTED  EXTERN  Y         512   4096  1048576      2046      774                0             774              0             N  ORAARCH/
+MOUNTED  EXTERN  N         512   4096  1048576      6138     2714                0            2714              0             N  ORADATA/
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1312                0            1312              0             N  ORAFRA/
+
+SQL>
+
+SQL> /
+
+no rows selected
+
+
+[root@node1 ~]# hostname
+node1.localdomain
+[root@node1 ~]# oracleasm createdisk MIGASMDATA1 /dev/iscsi/openfiler:mig-racdb-data1/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm createdisk MIGASMDATA2 /dev/iscsi/openfiler:mig-racdb-data2/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm listdisks
+ASMARCH1
+ASMARCH3
+ASMCRS1
+ASMDATA1
+ASMDATA2
+ASMFRA1
+ASMVOTE1
+ASMVOTE2
+ASMVOTE3
+MIGASMARCH1
+MIGASMARCH3
+MIGASMDATA1
+MIGASMDATA2
+[root@node1 ~]#
+
+
+[root@node2 ~]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Scanning system for ASM disks...
+Instantiating disk "MIGASMDATA1"
+Instantiating disk "MIGASMDATA2"
+[root@node2 ~]#
+
+
+alter diskgroup ORADATA add disk 'ORCL:MIGASMDATA1', 'ORCL:MIGASMDATA2' drop disk 'ASMDATA1', 'ASMDATA2' rebalance power 2;
+
+
+ASMDATA1, ASMDATA2
+
+SQL> col "Disk Group" format a20
+col "Disk Name" format a30
+SQL> SQL> col "Disk Path" format a30
+SQL> set lines 222
+SQL> Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+VOTE_DISK                                           ORCL:ASMVOTE1                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE2                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE3                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMARCH1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMARCH3                             0 FORMER
+VOTE_DISK                                           ORCL:MIGASMDATA1                          0 PROVISIONED
+VOTE_DISK                                           ORCL:MIGASMDATA2                          0 PROVISIONED
+CRS_VOTE             ASMCRS1                        ORCL:ASMCRS1                           2046 MEMBER
+ORADATA              ASMDATA1                       ORCL:ASMDATA1                          3069 MEMBER
+ORADATA              ASMDATA2                       ORCL:ASMDATA2                          3069 MEMBER
+ORAFRA               ASMFRA1                        ORCL:ASMFRA1                           2046 MEMBER
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+ORAARCH              MIGASMARCH1                    ORCL:MIGASMARCH1                       1023 MEMBER
+ORAARCH              MIGASMARCH3                    ORCL:MIGASMARCH3                       1023 MEMBER
+
+13 rows selected.
+
+SQL>
+
+[grid@node1 ~]$ sqlplus / as sysasm
+
+SQL*Plus: Release 11.2.0.4.0 Production on Fri Jun 2 17:19:25 2017
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Real Application Clusters and Automatic Storage Management options
+
+SQL> col "Disk Group" format a20
+col "Disk Name" format a30
+SQL> SQL> col "Disk Path" format a30
+SQL> set lines 222
+SQL> Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+VOTE_DISK                                           ORCL:ASMVOTE1                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE2                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE3                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMARCH1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMARCH3                             0 FORMER
+VOTE_DISK                                           ORCL:MIGASMDATA1                          0 PROVISIONED
+VOTE_DISK                                           ORCL:MIGASMDATA2                          0 PROVISIONED
+CRS_VOTE             ASMCRS1                        ORCL:ASMCRS1                           2046 MEMBER
+ORADATA              ASMDATA1                       ORCL:ASMDATA1                          3069 MEMBER
+ORADATA              ASMDATA2                       ORCL:ASMDATA2                          3069 MEMBER
+ORAFRA               ASMFRA1                        ORCL:ASMFRA1                           2046 MEMBER
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+ORAARCH              MIGASMARCH1                    ORCL:MIGASMARCH1                       1023 MEMBER
+ORAARCH              MIGASMARCH3                    ORCL:MIGASMARCH3                       1023 MEMBER
+
+13 rows selected.
+
+SQL> alter diskgroup ORADATA add disk 'MIGASMDATA1', 'MIGASMDATA2' drop disk 'ASMDATA1', 'ASMDATA2' rebalance power 2;
+alter diskgroup ORADATA add disk 'MIGASMDATA1', 'MIGASMDATA2' drop disk 'ASMDATA1', 'ASMDATA2' rebalance power 2
+*
+ERROR at line 1:
+ORA-15032: not all alterations performed
+ORA-15031: disk specification 'MIGASMDATA2' matches no disks
+ORA-15031: disk specification 'MIGASMDATA1' matches no disks
+
+
+SQL> alter diskgroup ORADATA add disk 'ORCL:MIGASMARCH1', 'ORCL:MIGASMARCH3' drop disk 'ASMDATA1', 'ASMDATA2' rebalance power 2;
+alter diskgroup ORADATA add disk 'ORCL:MIGASMARCH1', 'ORCL:MIGASMARCH3' drop disk 'ASMDATA1', 'ASMDATA2' rebalance power 2
+*
+ERROR at line 1:
+ORA-15032: not all alterations performed
+ORA-15029: disk 'ORCL:MIGASMARCH3' is already mounted by this instance
+ORA-15029: disk 'ORCL:MIGASMARCH1' is already mounted by this instance
+
+
+SQL>
+SQL>
+SQL> alter diskgroup ORADATA add disk 'ORCL:MIGASMDATA1', 'ORCL:MIGASMDATA2' drop disk 'ASMDATA1', 'ASMDATA2' rebalance power 2;
+
+Diskgroup altered.
+
+SQL> ! asmcmd lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1640                0            1640              0             N  CRS_VOTE/
+MOUNTED  EXTERN  N         512   4096  1048576      2046      778                0             778              0             N  ORAARCH/
+MOUNTED  EXTERN  Y         512   4096  1048576      8184     4756                0            4756              0             N  ORADATA/
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1312                0            1312              0             N  ORAFRA/
+
+SQL> select * from v$asm_operation;
+
+GROUP_NUMBER OPERA STAT      POWER     ACTUAL      SOFAR   EST_WORK   EST_RATE EST_MINUTES ERROR_CODE
+------------ ----- ---- ---------- ---------- ---------- ---------- ---------- ----------- --------------------------------------------
+           3 REBAL RUN           2          2        144       3420        727           4
+
+SQL>
+SQL> alter diskgroup ORADATA add disk 'ORCL:MIGASMDATA1', 'ORCL:MIGASMDATA2' drop disk 'ASMDATA1', 'ASMDATA2' rebalance power 2;
+
+Diskgroup altered.
+
+SQL> ! asmcmd lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1640                0            1640              0             N  CRS_VOTE/
+MOUNTED  EXTERN  N         512   4096  1048576      2046      778                0             778              0             N  ORAARCH/
+MOUNTED  EXTERN  Y         512   4096  1048576      8184     4756                0            4756              0             N  ORADATA/
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1312                0            1312              0             N  ORAFRA/
+
+SQL> select * from v$asm_operation;
+
+GROUP_NUMBER OPERA STAT      POWER     ACTUAL      SOFAR   EST_WORK   EST_RATE EST_MINUTES ERROR_CODE
+------------ ----- ---- ---------- ---------- ---------- ---------- ---------- ----------- --------------------------------------------
+           3 REBAL RUN           2          2        144       3420        727           4
+
+SQL> /
+
+GROUP_NUMBER OPERA STAT      POWER     ACTUAL      SOFAR   EST_WORK   EST_RATE EST_MINUTES ERROR_CODE
+------------ ----- ---- ---------- ---------- ---------- ---------- ---------- ----------- --------------------------------------------
+           3 REBAL RUN           2          2       1433       3420        734           2
+
+SQL> /
+
+GROUP_NUMBER OPERA STAT      POWER     ACTUAL      SOFAR   EST_WORK   EST_RATE EST_MINUTES ERROR_CODE
+------------ ----- ---- ---------- ---------- ---------- ---------- ---------- ----------- --------------------------------------------
+           3 REBAL RUN           2          2       2225       3420        730           1
+
+SQL> /
+
+no rows selected
+
+SQL>
+
+SQL> col "Disk Group" format a20
+SQL> col "Disk Name" format a30
+SQL> col "Disk Path" format a30
+SQL> set lines 222
+SQL> Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+VOTE_DISK                                           ORCL:ASMVOTE1                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE2                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE3                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMARCH1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMARCH3                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA2                             0 FORMER
+CRS_VOTE             ASMCRS1                        ORCL:ASMCRS1                           2046 MEMBER
+ORAFRA               ASMFRA1                        ORCL:ASMFRA1                           2046 MEMBER
+ORAARCH              MIGASMARCH1                    ORCL:MIGASMARCH1                       1023 MEMBER
+ORAARCH              MIGASMARCH3                    ORCL:MIGASMARCH3                       1023 MEMBER
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+ORADATA              MIGASMDATA1                    ORCL:MIGASMDATA1                       5115 MEMBER
+ORADATA              MIGASMDATA2                    ORCL:MIGASMDATA2                       3069 MEMBER
+
+13 rows selected.
+
+SQL>
+SQL>
+
+[oracle@node1 ~]$ srvctl status database -d svcg
+Instance svcg1 is running on node node1
+Instance svcg2 is running on node node2
+[oracle@node1 ~]$ srvctl status database -d svcg -v
+Instance svcg1 is running on node node1. Instance status: Open.
+Instance svcg2 is running on node node2. Instance status: Open.
+[oracle@node1 ~]$
+
+[root@node1 ~]# hostname
+node1.localdomain
+[root@node1 ~]# oracleasm createdisk MIGASMFRA1 /dev/iscsi/openfiler:mig-racdb-fra1/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Scanning system for ASM disks...
+[root@node1 ~]#
+
+[root@node2 ~]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Scanning system for ASM disks...
+Instantiating disk "MIGASMFRA1"
+[root@node2 ~]#
+
+alter diskgroup ORADATA add disk 'ORCL:MIGASMDATA1', 'ORCL:MIGASMDATA2' drop disk 'ASMFRA1' rebalance power 2;
+
+[grid@node1 ~]$ sqlplus / as sysasm
+
+SQL*Plus: Release 11.2.0.4.0 Production on Fri Jun 2 17:37:24 2017
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Real Application Clusters and Automatic Storage Management options
+
+SQL>  col "Disk Group" format a20
+ col "Disk Name" format a30
+SQL> SQL>  col "Disk Path" format a30
+SQL>  set lines 222
+SQL>  Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+VOTE_DISK                                           ORCL:ASMVOTE1                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE2                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE3                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMARCH1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMARCH3                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA2                             0 FORMER
+VOTE_DISK                                           ORCL:MIGASMFRA1                           0 PROVISIONED
+CRS_VOTE             ASMCRS1                        ORCL:ASMCRS1                           2046 MEMBER
+ORAFRA               ASMFRA1                        ORCL:ASMFRA1                           2046 MEMBER
+ORAARCH              MIGASMARCH1                    ORCL:MIGASMARCH1                       1023 MEMBER
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+ORAARCH              MIGASMARCH3                    ORCL:MIGASMARCH3                       1023 MEMBER
+ORADATA              MIGASMDATA1                    ORCL:MIGASMDATA1                       5115 MEMBER
+ORADATA              MIGASMDATA2                    ORCL:MIGASMDATA2                       3069 MEMBER
+
+14 rows selected.
+
+SQL>
+
+alter diskgroup ORAFRA add disk 'ORCL:MIGASMFRA1' drop disk 'ASMFRA1' rebalance power 2;
+
+SQL> alter diskgroup ORAFRA add disk 'ORCL:MIGASMFRA1' drop disk 'ASMFRA1' rebalance power 2;
+
+Diskgroup altered.
+
+SQL> select * from v$asm_operation;
+
+GROUP_NUMBER OPERA STAT      POWER     ACTUAL      SOFAR   EST_WORK   EST_RATE EST_MINUTES ERROR_CODE
+------------ ----- ---- ---------- ---------- ---------- ---------- ---------- ----------- --------------------------------------------
+           4 REBAL RUN           2          2        123        732        582           1
+
+SQL> ! asmcmd lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1640                0            1640              0             N  CRS_VOTE/
+MOUNTED  EXTERN  N         512   4096  1048576      2046      778                0             778              0             N  ORAARCH/
+MOUNTED  EXTERN  N         512   4096  1048576      8184     4760                0            4760              0             N  ORADATA/
+MOUNTED  EXTERN  Y         512   4096  1048576      2046     1310                0            1310              0             N  ORAFRA/
+
+SQL>
+
+SQL> /
+
+no rows selected
+
+SQL>
+
+
+SQL> Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+VOTE_DISK                                           ORCL:ASMVOTE1                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE2                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE3                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMARCH1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMARCH3                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA2                             0 FORMER
+VOTE_DISK                                           ORCL:ASMFRA1                              0 FORMER
+CRS_VOTE             ASMCRS1                        ORCL:ASMCRS1                           2046 MEMBER
+ORAARCH              MIGASMARCH1                    ORCL:MIGASMARCH1                       1023 MEMBER
+ORAARCH              MIGASMARCH3                    ORCL:MIGASMARCH3                       1023 MEMBER
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+ORADATA              MIGASMDATA1                    ORCL:MIGASMDATA1                       5115 MEMBER
+ORADATA              MIGASMDATA2                    ORCL:MIGASMDATA2                       3069 MEMBER
+ORAFRA               MIGASMFRA1                     ORCL:MIGASMFRA1                        2046 MEMBER
+
+14 rows selected.
+
+SQL>
+
+[grid@node1 ~]$ ocrcheck
+Status of Oracle Cluster Registry is as follows :
+         Version                  :          3
+         Total space (kbytes)     :     262120
+         Used space (kbytes)      :       3596
+         Available space (kbytes) :     258524
+         ID                       :  557650260
+         Device/File Name         :  +CRS_VOTE
+                                    Device/File integrity check succeeded
+
+                                    Device/File not configured
+
+                                    Device/File not configured
+
+                                    Device/File not configured
+
+                                    Device/File not configured
+
+         Cluster registry integrity check succeeded
+
+         Logical corruption check bypassed due to non-privileged user
+
+[grid@node1 ~]$
+
+[grid@node1 ~]$ crsctl query css votedisk
+##  STATE    File Universal Id                File Name Disk group
+--  -----    -----------------                --------- ---------
+ 1. ONLINE   15896a9cb43f4f0fbffde7f3aeede4c2 (ORCL:ASMVOTE1) [VOTE_DISK]
+ 2. ONLINE   78c87e07fc7a4fddbf4b7cf396179115 (ORCL:ASMVOTE2) [VOTE_DISK]
+ 3. ONLINE   91e3bab5c2c04f5ebfc86351de87ae5a (ORCL:ASMVOTE3) [VOTE_DISK]
+Located 3 voting disk(s).
+[grid@node1 ~]$
+
+[grid@node1 ~]$ sqlplus / as sysasm
+
+SQL*Plus: Release 11.2.0.4.0 Production on Fri Jun 2 17:46:23 2017
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Real Application Clusters and Automatic Storage Management options
+
+SQL> show parameter pfile
+
+NAME                                 TYPE        VALUE
+------------------------------------ ----------- ------------------------------
+spfile                               string      +CRS_VOTE/prabhu/asmparameterf
+                                                 ile/registry.253.914532795
+SQL> exit
+
+
+[grid@node1 ~]$ ocrconfig -showbackup
+
+node1     2017/06/02 14:56:52     /u01/app/11.2.0.4/grid/cdata/prabhu/backup00.ocr
+
+node1     2017/06/02 10:56:51     /u01/app/11.2.0.4/grid/cdata/prabhu/backup01.ocr
+
+node1     2017/06/02 06:56:49     /u01/app/11.2.0.4/grid/cdata/prabhu/backup02.ocr
+
+node1     2017/06/01 22:56:45     /u01/app/11.2.0.4/grid/cdata/prabhu/day.ocr
+
+node1     2017/06/01 22:56:45     /u01/app/11.2.0.4/grid/cdata/prabhu/week.ocr
+PROT-25: Manual backups for the Oracle Cluster Registry are not available
+[grid@node1 ~]$
+
+
+[root@node1 ~]# /u01/app/11.2.0.4/grid/bin/ocrconfig -manualbackup
+
+node1     2017/06/02 17:49:17     /u01/app/11.2.0.4/grid/cdata/prabhu/backup_20170602_174917.ocr
+[root@node1 ~]#
+
+
+oracleasm createdisk MIGASMCRS1 /dev/iscsi/openfiler:mig-racdb-crs1/part1
+
+[root@node1 ~]# hostname
+node1.localdomain
+[root@node1 ~]# oracleasm createdisk MIGASMCRS1 /dev/iscsi/openfiler:mig-racdb-crs1/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm listdisks
+ASMARCH1
+ASMARCH3
+ASMCRS1
+ASMDATA1
+ASMDATA2
+ASMFRA1
+ASMVOTE1
+ASMVOTE2
+ASMVOTE3
+MIGASMARCH1
+MIGASMARCH3
+MIGASMCRS1
+MIGASMDATA1
+MIGASMDATA2
+MIGASMFRA1
+[root@node1 ~]#
+
+[root@node2 ~]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Scanning system for ASM disks...
+Instantiating disk "MIGASMCRS1"
+[root@node2 ~]#
+
+alter diskgroup CRS_VOTE add disk 'ORCL:MIGASMCRS1' drop disk 'ASMCRS1' rebalance power 2;
+
+[grid@node1 ~]$ sqlplus / as sysasm
+
+SQL*Plus: Release 11.2.0.4.0 Production on Fri Jun 2 17:57:04 2017
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Real Application Clusters and Automatic Storage Management options
+
+SQL> alter diskgroup CRS_VOTE add disk 'ORCL:MIGASMCRS1' drop disk 'ASMCRS1' rebalance power 2;
+
+Diskgroup altered.
+
+SQL> set lines 222
+SQL> select * from v$asm_operation;
+
+GROUP_NUMBER OPERA STAT      POWER     ACTUAL      SOFAR   EST_WORK   EST_RATE EST_MINUTES ERROR_CODE
+------------ ----- ---- ---------- ---------- ---------- ---------- ---------- ----------- --------------------------------------------
+           1 REBAL RUN           2          2          2        404        703           0
+
+SQL> ! asmcmd lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  EXTERN  Y         512   4096  1048576      2046     1638                0            1638              0             N  CRS_VOTE/
+MOUNTED  EXTERN  N         512   4096  1048576      2046      778                0             778              0             N  ORAARCH/
+MOUNTED  EXTERN  N         512   4096  1048576      8184     4760                0            4760              0             N  ORADATA/
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1312                0            1312              0             N  ORAFRA/
+
+SQL> select * from v$asm_operation;
+
+no rows selected
+
+SQL>
+
+SQL> col "Disk Group" format a20
+col "Disk Name" format a30
+SQL> SQL> col "Disk Path" format a30
+SQL> set lines 222
+SQL> Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+VOTE_DISK                                           ORCL:ASMVOTE1                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE2                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMARCH1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMVOTE3                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMARCH3                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA2                             0 FORMER
+VOTE_DISK                                           ORCL:ASMCRS1                              0 FORMER
+VOTE_DISK                                           ORCL:ASMFRA1                              0 FORMER
+ORAARCH              MIGASMARCH1                    ORCL:MIGASMARCH1                       1023 MEMBER
+ORAARCH              MIGASMARCH3                    ORCL:MIGASMARCH3                       1023 MEMBER
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+ORADATA              MIGASMDATA1                    ORCL:MIGASMDATA1                       5115 MEMBER
+ORADATA              MIGASMDATA2                    ORCL:MIGASMDATA2                       3069 MEMBER
+ORAFRA               MIGASMFRA1                     ORCL:MIGASMFRA1                        2046 MEMBER
+CRS_VOTE             MIGASMCRS1                     ORCL:MIGASMCRS1                        2046 MEMBER
+
+15 rows selected.
+
+SQL>
+
+
+Move Votedisk
+----------------
+Create New Votingdisk from asmca
+
+[root@node1 ~]# oracleasm createdisk MIGASMVOTE1 /dev/iscsi/openfiler:mig-racdb-vote-1/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm createdisk MIGASMVOTE2 /dev/iscsi/openfiler:mig-racdb-vote-2/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm createdisk MIGASMVOTE3 /dev/iscsi/openfiler:mig-racdb-vote-3/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm listdisks
+ASMARCH1
+ASMARCH3
+ASMCRS1
+ASMDATA1
+ASMDATA2
+ASMFRA1
+ASMVOTE1
+ASMVOTE2
+ASMVOTE3
+MIGASMARCH1
+MIGASMARCH3
+MIGASMCRS1
+MIGASMDATA1
+MIGASMDATA2
+MIGASMFRA1
+MIGASMVOTE1
+MIGASMVOTE2
+MIGASMVOTE3
+[root@node1 ~]#
+
+[root@node2 openfiler:mig-racdb-vote-3]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Scanning system for ASM disks...
+Instantiating disk "MIGASMVOTE2"
+Instantiating disk "MIGASMVOTE3"
+Instantiating disk "MIGASMVOTE1"
+[root@node2 openfiler:mig-racdb-vote-3]#
+
+
+[grid@node1 ~]$ crsctl query css votedisk
+##  STATE    File Universal Id                File Name Disk group
+--  -----    -----------------                --------- ---------
+ 1. ONLINE   15896a9cb43f4f0fbffde7f3aeede4c2 (ORCL:ASMVOTE1) [VOTE_DISK]
+ 2. ONLINE   78c87e07fc7a4fddbf4b7cf396179115 (ORCL:ASMVOTE2) [VOTE_DISK]
+ 3. ONLINE   91e3bab5c2c04f5ebfc86351de87ae5a (ORCL:ASMVOTE3) [VOTE_DISK]
+Located 3 voting disk(s).
+[grid@node1 ~]$
+
+
+crsctl replace votedisk +MIG_VOTE_DISK
+
+[grid@node1 ~]$ sqlplus / as sysasm
+
+SQL*Plus: Release 11.2.0.4.0 Production on Fri Jun 2 18:15:50 2017
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Real Application Clusters and Automatic Storage Management options
+
+SQL> col "Disk Group" format a20
+col "Disk Name" format a30
+SQL> SQL> col "Disk Path" format a30
+SQL> set lines 222
+SQL> Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+VOTE_DISK                                           ORCL:ASMVOTE1                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE2                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE3                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMARCH1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMARCH3                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA2                             0 FORMER
+VOTE_DISK                                           ORCL:ASMFRA1                              0 FORMER
+VOTE_DISK                                           ORCL:ASMCRS1                              0 FORMER
+ORAARCH              MIGASMARCH1                    ORCL:MIGASMARCH1                       1023 MEMBER
+ORAARCH              MIGASMARCH3                    ORCL:MIGASMARCH3                       1023 MEMBER
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+ORADATA              MIGASMDATA1                    ORCL:MIGASMDATA1                       5115 MEMBER
+ORADATA              MIGASMDATA2                    ORCL:MIGASMDATA2                       3069 MEMBER
+ORAFRA               MIGASMFRA1                     ORCL:MIGASMFRA1                        2046 MEMBER
+CRS_VOTE             MIGASMCRS1                     ORCL:MIGASMCRS1                        2046 MEMBER
+MIG_VOTE_DISK        MIGASMVOTE1                    ORCL:MIGASMVOTE1                       1023 MEMBER
+MIG_VOTE_DISK        MIGASMVOTE2                    ORCL:MIGASMVOTE2                       1023 MEMBER
+MIG_VOTE_DISK        MIGASMVOTE3                    ORCL:MIGASMVOTE3                       1023 MEMBER
+
+18 rows selected.
+
+SQL>
+
+[grid@node1 ~]$ crsctl replace votedisk +MIG_VOTE_DISK
+Successful addition of voting disk 1cf25af568774f6ebf498c68126e9fac.
+Successful addition of voting disk 1c5521d5f8474f69bfb02690f43a2c07.
+Successful addition of voting disk 17ac79674e4b4f16bfbaf5bd412a277c.
+Successful deletion of voting disk 15896a9cb43f4f0fbffde7f3aeede4c2.
+Successful deletion of voting disk 78c87e07fc7a4fddbf4b7cf396179115.
+Successful deletion of voting disk 91e3bab5c2c04f5ebfc86351de87ae5a.
+Successfully replaced voting disk group with +MIG_VOTE_DISK.
+CRS-4266: Voting file(s) successfully replaced
+[grid@node1 ~]$ crsctl query css votedisk
+##  STATE    File Universal Id                File Name Disk group
+--  -----    -----------------                --------- ---------
+ 1. ONLINE   1cf25af568774f6ebf498c68126e9fac (ORCL:MIGASMVOTE1) [MIG_VOTE_DISK]
+ 2. ONLINE   1c5521d5f8474f69bfb02690f43a2c07 (ORCL:MIGASMVOTE2) [MIG_VOTE_DISK]
+ 3. ONLINE   17ac79674e4b4f16bfbaf5bd412a277c (ORCL:MIGASMVOTE3) [MIG_VOTE_DISK]
+Located 3 voting disk(s).
+[grid@node1 ~]$
+
+[grid@node1 ~]$ asmcmd lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1640                0            1640              0             N  CRS_VOTE/
+MOUNTED  NORMAL  N         512   4096  1048576      3069     2688             1023             832              0             Y  MIG_VOTE_DISK/
+MOUNTED  EXTERN  N         512   4096  1048576      2046      778                0             778              0             N  ORAARCH/
+MOUNTED  EXTERN  N         512   4096  1048576      8184     4760                0            4760              0             N  ORADATA/
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1312                0            1312              0             N  ORAFRA/
+[grid@node1 ~]$
+
+--- Drop Disk groups and asm disks
+-- Dropped using asmca
+SQL> col "Disk Group" format a20
+SQL> col "Disk Name" format a30
+SQL> col "Disk Path" format a30
+SQL> set lines 222
+SQL> Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+VOTE_DISK                                           ORCL:ASMVOTE1                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE2                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE3                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMARCH1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMARCH3                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA2                             0 FORMER
+VOTE_DISK                                           ORCL:ASMFRA1                              0 FORMER
+VOTE_DISK                                           ORCL:ASMCRS1                              0 FORMER
+ORAARCH              MIGASMARCH1                    ORCL:MIGASMARCH1                       1023 MEMBER
+ORAARCH              MIGASMARCH3                    ORCL:MIGASMARCH3                       1023 MEMBER
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+ORADATA              MIGASMDATA1                    ORCL:MIGASMDATA1                       5115 MEMBER
+ORADATA              MIGASMDATA2                    ORCL:MIGASMDATA2                       3069 MEMBER
+ORAFRA               MIGASMFRA1                     ORCL:MIGASMFRA1                        2046 MEMBER
+CRS_VOTE             MIGASMCRS1                     ORCL:MIGASMCRS1                        2046 MEMBER
+MIG_VOTE_DISK        MIGASMVOTE1                    ORCL:MIGASMVOTE1                       1023 MEMBER
+MIG_VOTE_DISK        MIGASMVOTE2                    ORCL:MIGASMVOTE2                       1023 MEMBER
+MIG_VOTE_DISK        MIGASMVOTE3                    ORCL:MIGASMVOTE3                       1023 MEMBER
+
+18 rows selected.
+
+SQL>
+SQL>
+SQL>
+SQL> /
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+ORAARCH              MIGASMARCH1                    ORCL:MIGASMARCH1                       1023 MEMBER
+ORAARCH              MIGASMARCH3                    ORCL:MIGASMARCH3                       1023 MEMBER
+ORADATA              MIGASMDATA1                    ORCL:MIGASMDATA1                       5115 MEMBER
+ORADATA              MIGASMDATA2                    ORCL:MIGASMDATA2                       3069 MEMBER
+ORAFRA               MIGASMFRA1                     ORCL:MIGASMFRA1                        2046 MEMBER
+CRS_VOTE             MIGASMCRS1                     ORCL:MIGASMCRS1                        2046 MEMBER
+MIG_VOTE_DISK        MIGASMVOTE1                    ORCL:MIGASMVOTE1                       1023 MEMBER
+MIG_VOTE_DISK        MIGASMVOTE2                    ORCL:MIGASMVOTE2                       1023 MEMBER
+MIG_VOTE_DISK        MIGASMVOTE3                    ORCL:MIGASMVOTE3                       1023 MEMBER
+
+9 rows selected.
+
+SQL>
+SQL>
+SQL> /
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+ORAARCH              MIGASMARCH1                    ORCL:MIGASMARCH1                       1023 MEMBER
+ORAARCH              MIGASMARCH3                    ORCL:MIGASMARCH3                       1023 MEMBER
+ORADATA              MIGASMDATA1                    ORCL:MIGASMDATA1                       5115 MEMBER
+ORADATA              MIGASMDATA2                    ORCL:MIGASMDATA2                       3069 MEMBER
+ORAFRA               MIGASMFRA1                     ORCL:MIGASMFRA1                        2046 MEMBER
+CRS_VOTE             MIGASMCRS1                     ORCL:MIGASMCRS1                        2046 MEMBER
+MIG_VOTE_DISK        MIGASMVOTE1                    ORCL:MIGASMVOTE1                       1023 MEMBER
+MIG_VOTE_DISK        MIGASMVOTE2                    ORCL:MIGASMVOTE2                       1023 MEMBER
+MIG_VOTE_DISK        MIGASMVOTE3                    ORCL:MIGASMVOTE3                       1023 MEMBER
+
+9 rows selected.
+
+SQL>
+
+
+SQL> Select a.name "Disk Group", b.name "Disk Name", b.path "Disk Path", b.TOTAL_MB "Disk Size MB",HEADER_STATUS from v$asm_disk b, v$asm_diskgroup a where a.GROUP_NUMBER=b.GROUP_NUMBER;
+
+Disk Group           Disk Name                      Disk Path                      Disk Size MB HEADER_STATU
+-------------------- ------------------------------ ------------------------------ ------------ ------------
+VOTE_DISK                                           ORCL:ASMVOTE1                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE2                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMVOTE3                             0 MEMBER
+VOTE_DISK                                           ORCL:ASMARCH1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMARCH3                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA1                             0 FORMER
+VOTE_DISK                                           ORCL:ASMDATA2                             0 FORMER
+VOTE_DISK                                           ORCL:ASMFRA1                              0 FORMER
+VOTE_DISK                                           ORCL:ASMCRS1                              0 FORMER
+
+
+[grid@node1 ~]$ oracleasm listdisks
+ASMARCH1
+ASMARCH3
+ASMCRS1
+ASMDATA1
+ASMDATA2
+ASMFRA1
+ASMVOTE1
+ASMVOTE2
+ASMVOTE3
+MIGASMARCH1
+MIGASMARCH3
+MIGASMCRS1
+MIGASMDATA1
+MIGASMDATA2
+MIGASMFRA1
+MIGASMVOTE1
+MIGASMVOTE2
+MIGASMVOTE3
+[grid@node1 ~]$
+
+[grid@node1 ~]$ sqlplus / as sysasm
+
+SQL*Plus: Release 11.2.0.4.0 Production on Fri Jun 2 18:51:01 2017
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Real Application Clusters and Automatic Storage Management options
+
+SQL>  col path format a50
+ set lines 222
+ select mount_status,header_status,mode_status,state,total_mb,free_mb,name,path,label from v$asm_disk;
+SQL> SQL>
+MOUNT_S HEADER_STATU MODE_ST STATE      TOTAL_MB    FREE_MB NAME                           PATH                                               LABEL
+------- ------------ ------- -------- ---------- ---------- ------------------------------ -------------------------------------------------- -------------------------------
+CLOSED  FORMER       ONLINE  NORMAL            0          0                                ORCL:ASMVOTE1                                      ASMVOTE1
+CLOSED  FORMER       ONLINE  NORMAL            0          0                                ORCL:ASMVOTE2                                      ASMVOTE2
+CLOSED  FORMER       ONLINE  NORMAL            0          0                                ORCL:ASMCRS1                                       ASMCRS1
+CLOSED  FORMER       ONLINE  NORMAL            0          0                                ORCL:ASMFRA1                                       ASMFRA1
+CLOSED  FORMER       ONLINE  NORMAL            0          0                                ORCL:ASMDATA2                                      ASMDATA2
+CLOSED  FORMER       ONLINE  NORMAL            0          0                                ORCL:ASMDATA1                                      ASMDATA1
+CLOSED  FORMER       ONLINE  NORMAL            0          0                                ORCL:ASMARCH3                                      ASMARCH3
+CLOSED  FORMER       ONLINE  NORMAL            0          0                                ORCL:ASMARCH1                                      ASMARCH1
+CLOSED  FORMER       ONLINE  NORMAL            0          0                                ORCL:ASMVOTE3                                      ASMVOTE3
+CACHED  MEMBER       ONLINE  NORMAL         1023        381 MIGASMARCH1                    ORCL:MIGASMARCH1                                   MIGASMARCH1
+CACHED  MEMBER       ONLINE  NORMAL         1023        397 MIGASMARCH3                    ORCL:MIGASMARCH3                                   MIGASMARCH3
+
+MOUNT_S HEADER_STATU MODE_ST STATE      TOTAL_MB    FREE_MB NAME                           PATH                                               LABEL
+------- ------------ ------- -------- ---------- ---------- ------------------------------ -------------------------------------------------- -------------------------------
+CACHED  MEMBER       ONLINE  NORMAL         5115       3395 MIGASMDATA1                    ORCL:MIGASMDATA1                                   MIGASMDATA1
+CACHED  MEMBER       ONLINE  NORMAL         3069       1365 MIGASMDATA2                    ORCL:MIGASMDATA2                                   MIGASMDATA2
+CACHED  MEMBER       ONLINE  NORMAL         2046       1312 MIGASMFRA1                     ORCL:MIGASMFRA1                                    MIGASMFRA1
+CACHED  MEMBER       ONLINE  NORMAL         2046       1640 MIGASMCRS1                     ORCL:MIGASMCRS1                                    MIGASMCRS1
+CACHED  MEMBER       ONLINE  NORMAL         1023        896 MIGASMVOTE1                    ORCL:MIGASMVOTE1                                   MIGASMVOTE1
+CACHED  MEMBER       ONLINE  NORMAL         1023        896 MIGASMVOTE2                    ORCL:MIGASMVOTE2                                   MIGASMVOTE2
+CACHED  MEMBER       ONLINE  NORMAL         1023        896 MIGASMVOTE3                    ORCL:MIGASMVOTE3                                   MIGASMVOTE3
+
+18 rows selected.
+
+SQL>
+
+[root@node1 ~]# oracleasm deletedisk ASMVOTE1
+Clearing disk header: failed
+Unable to clear disk "ASMVOTE1"
+[root@node1 ~]# oracleasm deletedisk ASMVOTE2
+Clearing disk header: done
+Dropping disk: done
+[root@node1 ~]# oracleasm deletedisk ASMVOTE3
+Clearing disk header: done
+Dropping disk: done
+[root@node1 ~]# oracleasm deletedisk ASMFRA1
+Clearing disk header: done
+Dropping disk: done
+[root@node1 ~]# oracleasm deletedisk ASMDATA2
+Clearing disk header: done
+Dropping disk: done
+[root@node1 ~]# oracleasm deletedisk ASMDATA1
+Clearing disk header: done
+Dropping disk: done
+[root@node1 ~]# oracleasm deletedisk ASMARCH3
+Clearing disk header: done
+Dropping disk: done
+[root@node1 ~]# oracleasm deletedisk ASMARCH1
+Clearing disk header: done
+Dropping disk: done
+[root@node1 ~]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Scanning system for ASM disks...
+[root@node1 ~]#
+
+[root@node2 ~]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Cleaning disk "ASMARCH1"
+Cleaning disk "ASMARCH3"
+Cleaning disk "ASMDATA1"
+Cleaning disk "ASMDATA2"
+Cleaning disk "ASMFRA1"
+Cleaning disk "ASMVOTE2"
+Cleaning disk "ASMVOTE3"
+Scanning system for ASM disks...
+[root@node2 ~]#
+
+[root@node2 ~]# oracleasm listdisks
+ASMCRS1
+ASMVOTE1
+MIGASMARCH1
+MIGASMARCH3
+MIGASMCRS1
+MIGASMDATA1
+MIGASMDATA2
+MIGASMFRA1
+MIGASMVOTE1
+MIGASMVOTE2
+MIGASMVOTE3
+[root@node2 ~]# oracleasm deletedisk ASMCRS1
+Clearing disk header: done
+Dropping disk: done
+[root@node2 ~]# oracleasm deletedisk ASMVOTE1
+Clearing disk header: done
+Dropping disk: done
+[root@node2 ~]#
+
+
+[root@node2 ~]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Scanning system for ASM disks...
+[root@node2 ~]# oracleasm listdisks
+MIGASMARCH1
+MIGASMARCH3
+MIGASMCRS1
+MIGASMDATA1
+MIGASMDATA2
+MIGASMFRA1
+MIGASMVOTE1
+MIGASMVOTE2
+MIGASMVOTE3
+[root@node2 ~]#
+
+
+[root@node1 ~]# oracleasm listdisks
+ASMCRS1
+ASMVOTE1
+MIGASMARCH1
+MIGASMARCH3
+MIGASMCRS1
+MIGASMDATA1
+MIGASMDATA2
+MIGASMFRA1
+MIGASMVOTE1
+MIGASMVOTE2
+MIGASMVOTE3
+[root@node1 ~]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Cleaning disk "ASMCRS1"
+Cleaning disk "ASMVOTE1"
+Scanning system for ASM disks...
+[root@node1 ~]# oracleasm listdisks
+MIGASMARCH1
+MIGASMARCH3
+MIGASMCRS1
+MIGASMDATA1
+MIGASMDATA2
+MIGASMFRA1
+MIGASMVOTE1
+MIGASMVOTE2
+MIGASMVOTE3
+[root@node1 ~]#
+
+
+[grid@node1 ~]$ crsctl stat res -t
+--------------------------------------------------------------------------------
+NAME           TARGET  STATE        SERVER                   STATE_DETAILS
+--------------------------------------------------------------------------------
+Local Resources
+--------------------------------------------------------------------------------
+ora.CRS_VOTE.dg
+               ONLINE  ONLINE       node1
+               ONLINE  ONLINE       node2
+ora.LISTENER.lsnr
+               ONLINE  ONLINE       node1
+               ONLINE  ONLINE       node2
+ora.MIG_VOTE_DISK.dg
+               ONLINE  ONLINE       node1
+               ONLINE  ONLINE       node2
+ora.ORAARCH.dg
+               ONLINE  ONLINE       node1
+               ONLINE  ONLINE       node2
+ora.ORADATA.dg
+               ONLINE  ONLINE       node1
+               ONLINE  ONLINE       node2
+ora.ORAFRA.dg
+               ONLINE  ONLINE       node1
+               ONLINE  ONLINE       node2
+ora.asm
+               ONLINE  ONLINE       node1                    Started
+               ONLINE  ONLINE       node2                    Started
+ora.gsd
+               OFFLINE OFFLINE      node1
+               OFFLINE OFFLINE      node2
+ora.net1.network
+               ONLINE  ONLINE       node1
+               ONLINE  ONLINE       node2
+ora.ons
+               ONLINE  ONLINE       node1
+               ONLINE  ONLINE       node2
+ora.registry.acfs
+               ONLINE  ONLINE       node1
+               ONLINE  ONLINE       node2
+--------------------------------------------------------------------------------
+Cluster Resources
+--------------------------------------------------------------------------------
+ora.LISTENER_SCAN1.lsnr
+      1        ONLINE  ONLINE       node2
+ora.LISTENER_SCAN2.lsnr
+      1        ONLINE  ONLINE       node1
+ora.LISTENER_SCAN3.lsnr
+      1        ONLINE  ONLINE       node1
+ora.cvu
+      1        ONLINE  ONLINE       node1
+ora.node1.vip
+      1        ONLINE  ONLINE       node1
+ora.node2.vip
+      1        ONLINE  ONLINE       node2
+ora.oc4j
+      1        ONLINE  ONLINE       node1
+ora.scan1.vip
+      1        ONLINE  ONLINE       node2
+ora.scan2.vip
+      1        ONLINE  ONLINE       node1
+ora.scan3.vip
+      1        ONLINE  ONLINE       node1
+ora.svcg.db
+      1        ONLINE  ONLINE       node2                    Open
+      2        ONLINE  ONLINE       node1                    Open
+[grid@node1 ~]$
+
+
+[root@node1 ~]# iscsiadm -m discovery -t sendtargets -p 192.168.179.112
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb-data2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.data1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-3
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch3
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.crs1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.fra1
+[root@node1 ~]#
+
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb-data2  -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.data1  -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch1  -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-3 -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-2 -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch3  -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch2  -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.crs1   -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-1 -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.fra1   -p 192.168.179.112 --op update -n node.startup -v manual
+
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb-data2  -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch1  -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-3 -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-2 -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch3  -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch2  -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.data1  -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch1  -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-3 -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-2 -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch3  -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch2  -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.crs1   -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-1 -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.fra1   -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb-data2  -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch1  -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-3 -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-2 -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch3  -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch2  -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.crs1   -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-1 -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.fra1   -p 192.168.179.112 --op update -n node.startup -v manual[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.data1  -p 192.168pdate -n node.startup -v manual
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch1  -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-3 -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-2 -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch3  -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch2  -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.crs1   -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb:vote-1 -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.fra1   -p 192.168.179.112 --op update -n node.startup -v manual
+[root@node2 ~]#
+[root@node2 ~]#
+[root@node2 ~]#
+
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb-data2 
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.data1 
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch1 
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-3
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-2
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch3 
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch2 
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.crs1  
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-1
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.fra1  
+
+[root@node2 ~]# iscsiadm -m discovery -t sendtargets -p 192.168.179.112
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb-data2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.data1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-3
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch3
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.crs1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.fra1
+[root@node2 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb-data2
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch1
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-3
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-2
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch3
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch2
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.crs1
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-1
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.fra1 [root@node2 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.data1
+[root@node2 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch1
+[root@node2 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-3
+[root@node2 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-2
+[root@node2 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch3
+[root@node2 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch2
+[root@node2 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.crs1
+[root@node2 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-1
+[root@node2 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.fra1
+[root@node2 ~]#
+[root@node2 ~]#
+
+[root@node1 ~]# iscsiadm -m discovery -t sendtargets -p 192.168.179.112
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb-data2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.data1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-3
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch3
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch2
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.crs1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb:vote-1
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.fra1
+[root@node1 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb-data2
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch1
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-3
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-2
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch3
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch2
+
+[root@node1 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.data1
+[root@node1 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch1
+[root@node1 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-3
+[root@node1 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-2
+[root@node1 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch3
+[root@node1 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.arch2
+[root@node1 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.crs1
+[root@node1 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb:vote-1
+[root@node1 ~]# iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:racdb.fra1
+[root@node1 ~]#
+[root@node1 ~]#
+[root@node1 ~]#
+
+
+
+iscsiadm -m node -T iqn.2006-01.com.openfiler:scsi.linux3-data-1 -p 192.168.179.112 --op update -n node.startup -v manual
+iscsiadm -m node --op delete --targetname iqn.2006-01.com.openfiler:scsi.linux3-data-1
+
+
+
+fdisk /dev/iscsi/openfiler:mig-racdb-vote-2/part
+fdisk /dev/iscsi/openfiler:mig-racdb-fra1/part
+fdisk /dev/iscsi/openfiler:mig-racdb-data1/part
+fdisk /dev/iscsi/openfiler:mig-racdb-arch2/part
+fdisk /dev/iscsi/openfiler:mig-racdb-crs1/part
+fdisk /dev/iscsi/openfiler:mig-racdb-arch1/part
+fdisk /dev/iscsi/openfiler:mig-racdb-data2/part
+
+
+openfiler:mig-racdb-vote-3
+openfiler:mig-racdb-vote-2
+
+openfiler:mig-racdb-fra1
+openfiler:mig-racdb-data1
+openfiler:mig-racdb-arch2
+openfiler:mig-racdb-crs1
+openfiler:mig-racdb-vote-1
+openfiler:mig-racdb-arch1
+openfiler:mig-racdb-data2
+
+
+
+oracleasm createdisk ASMARCH3 /dev/iscsi/openfiler:mig-racdb-vote-2/part1
+
+
+oracleasm createdisk ASMARCH3 /dev/iscsi/openfiler:mig-racdb-fra1/part1
+oracleasm createdisk ASMARCH3 /dev/iscsi/openfiler:mig-racdb-data1/part1
+oracleasm createdisk ASMARCH3 /dev/iscsi/openfiler:mig-racdb-arch2/part1
+oracleasm createdisk ASMARCH3 /dev/iscsi/openfiler:mig-racdb-crs1/part1
+oracleasm createdisk ASMARCH3 /dev/iscsi/openfiler:mig-racdb-arch1/part1
+oracleasm createdisk ASMARCH3 /dev/iscsi/openfiler:mig-racdb-data2/part1
+
+
+oracleasm createdisk MIGASMARCH1 /dev/iscsi/openfiler:mig-racdb-arch1/part1
+oracleasm createdisk MIGASMARCH3 /dev/iscsi/openfiler:mig-racdb-arch2/part1
+
+
+[root@node1 ~]# hostname
+node1.localdomain
+[root@node1 ~]# which oracleasm
+/usr/sbin/oracleasm
+[root@node1 ~]# oracleasm listdisks
+ASMARCH1
+ASMARCH3
+ASMCRS1
+ASMDATA1
+ASMDATA2
+ASMFRA1
+ASMVOTE1
+ASMVOTE2
+ASMVOTE3
+[root@node1 ~]# oracleasm createdisk MIGASMARCH1 /dev/iscsi/openfiler:mig-racdb-arch1/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm createdisk MIGASMARCH3 /dev/iscsi/openfiler:mig-racdb-arch2/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm listdisks
+ASMARCH1
+ASMARCH3
+ASMCRS1
+ASMDATA1
+ASMDATA2
+ASMFRA1
+ASMVOTE1
+ASMVOTE2
+ASMVOTE3
+MIGASMARCH1
+MIGASMARCH3
+[root@node1 ~]#
+
+
+
+[root@node2 ~]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Scanning system for ASM disks...
+Instantiating disk "MIGASMARCH3"
+Instantiating disk "MIGASMARCH1"
+[root@node2 ~]# oracleasm listdisks
+ASMARCH1
+ASMARCH3
+ASMCRS1
+ASMDATA1
+ASMDATA2
+ASMFRA1
+ASMVOTE1
+ASMVOTE2
+ASMVOTE3
+MIGASMARCH1
+MIGASMARCH3
+[root@node2 ~]#
+
+
+oracleasm createdisk MIGASMDATA1 /dev/iscsi/openfiler:mig-racdb-data1/part1
+oracleasm createdisk MIGASMDATA2 /dev/iscsi/openfiler:mig-racdb-data2/part1
+
+oracleasm createdisk MIGASMFRA1 /dev/iscsi/openfiler:mig-racdb-fra1/part1
+
+oracleasm createdisk MIGASMVOTE1 /dev/iscsi/openfiler:mig-racdb-vote-1/part1
+oracleasm createdisk MIGASMVOTE2 /dev/iscsi/openfiler:mig-racdb-vote-2/part1
+oracleasm createdisk MIGASMVOTE3 /dev/iscsi/openfiler:mig-racdb-vote-3/part1
+
+[root@node1 ~]# oracleasm createdisk MIGASMVOTE1 /dev/iscsi/openfiler:mig-racdb-vote-1/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm createdisk MIGASMVOTE2 /dev/iscsi/openfiler:mig-racdb-vote-2/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm createdisk MIGASMVOTE3 /dev/iscsi/openfiler:mig-racdb-vote-3/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm listdisks
+ASMARCH1
+ASMARCH3
+ASMCRS1
+ASMDATA1
+ASMDATA2
+ASMFRA1
+ASMVOTE1
+ASMVOTE2
+ASMVOTE3
+MIGASMARCH1
+MIGASMARCH3
+MIGASMCRS1
+MIGASMDATA1
+MIGASMDATA2
+MIGASMFRA1
+MIGASMVOTE1
+MIGASMVOTE2
+MIGASMVOTE3
+[root@node1 ~]#
+
+[root@node2 openfiler:mig-racdb-vote-3]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Scanning system for ASM disks...
+Instantiating disk "MIGASMVOTE2"
+Instantiating disk "MIGASMVOTE3"
+Instantiating disk "MIGASMVOTE1"
+[root@node2 openfiler:mig-racdb-vote-3]#
+
+
+
+
+
+MIGASMARCH1
+MIGASMARCH3
+MIGASMCRS1 
+MIGASMDATA1
+MIGASMDATA2
+MIGASMFRA1 
