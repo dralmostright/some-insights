@@ -1,0 +1,421 @@
+ACFS File System Management:
+============================
+[root@node1 ~]# df -h
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda1              15G  2.8G   11G  21% /
+/dev/mapper/vol_u01-lvol_u01
+                       20G   14G  5.3G  72% /u01
+/dev/mapper/vol_soft-lvol_soft
+                      9.7G  1.1G  8.2G  12% /software
+tmpfs                1005M  116M  889M  12% /dev/shm
+/dev/hdc              3.4G  3.4G     0 100% /repo
+/dev/sdd1             1.0G  497M  528M  49% /archive
+/dev/asm/acfsarc-203  512M  116M  397M  23% /acfsarch
+/dev/asm/asfsarch-395
+                      800M  189M  612M  24% /u01/app/grid/acfsmounts/arch
+[root@node1 ~]# 
+
+[root@node1 ~]# hostname
+node1.localdomain
+[root@node1 ~]# . oraenv
+ORACLE_SID = [root] ? +ASM1
+The Oracle base has been set to /u01/app/grid
+[root@node1 ~]# 
+
+[root@node1 ~]# which acfsutil
+/sbin/acfsutil
+[root@node1 ~]# 
+
+[root@node1 ~]# acfsutil version
+acfsutil version: 11.2.0.4.0
+[root@node1 ~]# 
+
+
+[root@node1 ~]# acfsutil info fs
+/acfsarch
+    ACFS Version: 11.2.0.4.0
+    flags:        MountPoint,Available
+    mount time:   Fri May 19 16:49:16 2017
+    volumes:      1
+    total size:   536870912
+    total free:   415965184
+    primary volume: /dev/asm/acfsarc-203
+        label:                 
+        flags:                 Primary,Available,ADVM
+        on-disk version:       39.0
+        allocation unit:       4096
+        major, minor:          252, 103937
+        size:                  536870912
+        free:                  415965184
+        ADVM diskgroup         ORADATA
+        ADVM resize increment: 33554432
+        ADVM redundancy:       unprotected
+        ADVM stripe columns:   4
+        ADVM stripe width:     131072
+    number of snapshots:  0
+    snapshot space usage: 0
+    replication status: DISABLED
+
+/u01/app/grid/acfsmounts/arch
+    ACFS Version: 11.2.0.4.0
+    flags:        MountPoint,Available
+    mount time:   Fri May 19 16:49:35 2017
+    volumes:      1
+    total size:   838860800
+    total free:   641236992
+    primary volume: /dev/asm/asfsarch-395
+        label:                 
+        flags:                 Primary,Available,ADVM
+        on-disk version:       39.0
+        allocation unit:       4096
+        major, minor:          252, 202241
+        size:                  838860800
+        free:                  641236992
+        ADVM diskgroup         ORAARCH
+        ADVM resize increment: 33554432
+        ADVM redundancy:       unprotected
+        ADVM stripe columns:   4
+        ADVM stripe width:     131072
+    number of snapshots:  0
+    snapshot space usage: 0
+    replication status: DISABLED
+[root@node1 ~]# 
+
+
+[root@node1 ~]# acfsutil info fs /acfsarch
+/acfsarch
+    ACFS Version: 11.2.0.4.0
+    flags:        MountPoint,Available
+    mount time:   Fri May 19 16:49:16 2017
+    volumes:      1
+    total size:   536870912
+    total free:   415965184
+    primary volume: /dev/asm/acfsarc-203
+        label:                 
+        flags:                 Primary,Available,ADVM
+        on-disk version:       39.0
+        allocation unit:       4096
+        major, minor:          252, 103937
+        size:                  536870912
+        free:                  415965184
+        ADVM diskgroup         ORADATA
+        ADVM resize increment: 33554432
+        ADVM redundancy:       unprotected
+        ADVM stripe columns:   4
+        ADVM stripe width:     131072
+    number of snapshots:  0
+    snapshot space usage: 0
+    replication status: DISABLED
+[root@node1 ~]# 
+
+[grid@node1 ~]$ asmcmd lsdg
+State    Type    Rebal  Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  EXTERN  N         512   4096  1048576      2046     1640                0            1640              0             N  CRS_VOTE/
+MOUNTED  EXTERN  N         512   4096  1048576      1023       83                0              83              0             N  ORAARCH/
+MOUNTED  EXTERN  N         512   4096  1048576      6138     2977                0            2977              0             N  ORADATA/
+MOUNTED  EXTERN  N         512   4096  1048576      2046      827                0             827              0             N  ORAFRA/
+[grid@node1 ~]$ 
+
+
+[grid@node1 ~]$ sqlplus / as sysasm
+
+SQL*Plus: Release 11.2.0.4.0 Production on Fri May 19 17:31:15 2017
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.4.0 - 64bit Production
+With the Real Application Clusters and Automatic Storage Management options
+
+SQL> select name, state, total_mb,free_mb from v$asm_diskgroup;
+
+NAME                           STATE         TOTAL_MB    FREE_MB
+------------------------------ ----------- ---------- ----------
+CRS_VOTE                       MOUNTED           2046       1640
+ORAARCH                        MOUNTED           1023         83
+ORADATA                        MOUNTED           6138       2977
+ORAFRA                         MOUNTED           2046        827
+VOTE_DISK                      DISMOUNTED           0          0
+
+SQL> 
+
+SQL> col path format a40
+SQL> set lines 222
+SQL> select path, name, header_status, os_mb from v$asm_disk;
+
+PATH                                     NAME                           HEADER_STATU      OS_MB
+---------------------------------------- ------------------------------ ------------ ----------
+ORCL:ASMVOTE1                                                           MEMBER             1023
+ORCL:ASMVOTE2                                                           MEMBER             1023
+ORCL:ASMVOTE3                                                           MEMBER             1023
+ORCL:ASMARCH1                            ASMARCH1                       MEMBER             1023
+ORCL:ASMCRS1                             ASMCRS1                        MEMBER             2046
+ORCL:ASMDATA1                            ASMDATA1                       MEMBER             3069
+ORCL:ASMDATA2                            ASMDATA2                       MEMBER             3069
+ORCL:ASMFRA1                             ASMFRA1                        MEMBER             2046
+
+8 rows selected.
+
+SQL> col mountpath format a60
+SQL> col USAGE format a10
+SQL> col VOLUME_NAME format a15
+SQL> col SIZE_MB format 9999999
+SQL> select volume_name, size_mb, usage, mountpath from v$asm_volume;
+
+VOLUME_NAME      SIZE_MB USAGE      MOUNTPATH
+--------------- -------- ---------- ------------------------------------------------------------
+ASFSARCH             800 ACFS       /u01/app/grid/acfsmounts/arch
+ACFSARC              512 ACFS       /acfsarch
+
+SQL> 
+
+
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch3 -p 192.168.179.112 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:racdb.arch3, portal: 192.168.179.112,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:racdb.arch3, portal: 192.168.179.112,3260]: successful
+[root@node2 ~]# 
+
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch3 -p 192.168.179.112 -l
+Logging in to [iface: default, target: iqn.2006-01.com.openfiler:racdb.arch3, portal: 192.168.179.112,3260]
+Login to [iface: default, target: iqn.2006-01.com.openfiler:racdb.arch3, portal: 192.168.179.112,3260]: successful
+[root@node1 ~]# 
+
+[root@node1 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch3 -p 192.168.179.112 --op update -n node.startup -v automatic
+[root@node1 ~]# 
+
+[root@node2 ~]# iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch3 -p 192.168.179.112 --op update -n node.startup -v automatic
+[root@node2 ~]# 
+
+
+[root@node1 ~]# ls -l /dev/iscsi/arch3/part
+lrwxrwxrwx 1 root root 9 May 19 18:52 /dev/iscsi/arch3/part -> ../../sdk
+[root@node1 ~]# 
+
+
+[root@node2 ~]# ls -l /dev/iscsi/arch3/part
+lrwxrwxrwx 1 root root 9 May 19 18:52 /dev/iscsi/arch3/part -> ../../sdk
+[root@node2 ~]# 
+
+
+[root@node1 ~]# fdisk /dev/iscsi/arch3/part
+Device contains neither a valid DOS partition table, nor Sun, SGI or OSF disklabel
+Building a new DOS disklabel. Changes will remain in memory only,
+until you decide to write them. After that, of course, the previous
+content won't be recoverable.
+
+Warning: invalid flag 0x0000 of partition table 4 will be corrected by w(rite)
+
+Command (m for help): n
+Command action
+   e   extended
+   p   primary partition (1-4)
+p
+Partition number (1-4): 1
+First cylinder (1-1009, default 1): 
+Using default value 1
+Last cylinder or +size or +sizeM or +sizeK (1-1009, default 1009): 
+Using default value 1009
+
+Command (m for help): w
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+Syncing disks.
+[root@node1 ~]# partprobe
+Warning: Unable to open /dev/hdc read-write (Read-only file system).  /dev/hdc has been opened read-only.
+[root@node1 ~]# 
+
+
+[root@node2 ~]# ls -l /dev/iscsi/arch3/part
+lrwxrwxrwx 1 root root 9 May 19 18:52 /dev/iscsi/arch3/part -> ../../sdk
+[root@node2 ~]# 
+[root@node2 ~]# 
+[root@node2 ~]# 
+[root@node2 ~]# fdisk /dev/iscsi/arch3/part
+
+Command (m for help): n
+Command action
+   e   extended
+   p   primary partition (1-4)
+p
+Partition number (1-4): 1
+Partition 1 is already defined.  Delete it before re-adding it.
+
+Command (m for help): q
+
+[root@node2 ~]# partprobe
+Warning: Unable to open /dev/hdc read-write (Read-only file system).  /dev/hdc has been opened read-only.
+[root@node2 ~]# 
+
+
+[root@node1 ~]# which oracleasm
+/usr/sbin/oracleasm
+[root@node1 ~]# oracleasm listdisks
+ASMARCH1
+ASMCRS1
+ASMDATA1
+ASMDATA2
+ASMFRA1
+ASMVOTE1
+ASMVOTE2
+ASMVOTE3
+[root@node1 ~]# oracleasm createdisk ASMARCH3 /dev/iscsi/arch3/part1
+Writing disk header: done
+Instantiating disk: done
+[root@node1 ~]# oracleasm listdisks
+ASMARCH1
+ASMARCH3
+ASMCRS1
+ASMDATA1
+ASMDATA2
+ASMFRA1
+ASMVOTE1
+ASMVOTE2
+ASMVOTE3
+[root@node1 ~]# 
+
+
+[root@node2 ~]# which oracleasm
+/usr/sbin/oracleasm
+[root@node2 ~]# oracleasm listdisks
+ASMARCH1
+ASMCRS1
+ASMDATA1
+ASMDATA2
+ASMFRA1
+ASMVOTE1
+ASMVOTE2
+ASMVOTE3
+[root@node2 ~]# oracleasm scandisks
+Reloading disk partitions: done
+Cleaning any stale ASM disks...
+Scanning system for ASM disks...
+Instantiating disk "ASMARCH3"
+[root@node2 ~]# oracleasm listdisks
+ASMARCH1
+ASMARCH3
+ASMCRS1
+ASMDATA1
+ASMDATA2
+ASMFRA1
+ASMVOTE1
+ASMVOTE2
+ASMVOTE3
+[root@node2 ~]# 
+
+
+SQL> col path format a50
+SQL> set lines 222
+SQL> select mount_status,header_status,mode_status,state,total_mb,free_mb,name,path,label from v$asm_disk;
+
+MOUNT_S HEADER_STATU MODE_ST STATE      TOTAL_MB    FREE_MB NAME                           PATH                                               LABEL
+------- ------------ ------- -------- ---------- ---------- ------------------------------ -------------------------------------------------- -------------------------------
+CLOSED  MEMBER       ONLINE  NORMAL            0          0                                ORCL:ASMVOTE1                                      ASMVOTE1
+CLOSED  MEMBER       ONLINE  NORMAL            0          0                                ORCL:ASMVOTE2                                      ASMVOTE2
+CLOSED  MEMBER       ONLINE  NORMAL            0          0                                ORCL:ASMVOTE3                                      ASMVOTE3
+CLOSED  PROVISIONED  ONLINE  NORMAL            0          0                                ORCL:ASMARCH3                                      ASMARCH3
+CACHED  MEMBER       ONLINE  NORMAL         1023         83 ASMARCH1                       ORCL:ASMARCH1                                      ASMARCH1
+CACHED  MEMBER       ONLINE  NORMAL         2046       1640 ASMCRS1                        ORCL:ASMCRS1                                       ASMCRS1
+CACHED  MEMBER       ONLINE  NORMAL         3069       1465 ASMDATA1                       ORCL:ASMDATA1                                      ASMDATA1
+CACHED  MEMBER       ONLINE  NORMAL         3069       1502 ASMDATA2                       ORCL:ASMDATA2                                      ASMDATA2
+CACHED  MEMBER       ONLINE  NORMAL         2046        827 ASMFRA1                        ORCL:ASMFRA1                                       ASMFRA1
+
+9 rows selected.
+
+SQL> 
+
+SQL> select name, state, total_mb,free_mb from v$asm_diskgroup;
+
+NAME                           STATE         TOTAL_MB    FREE_MB
+------------------------------ ----------- ---------- ----------
+CRS_VOTE                       MOUNTED           2046       1640
+ORAARCH                        MOUNTED           1023         83
+ORADATA                        MOUNTED           6138       2967
+ORAFRA                         MOUNTED           2046        827
+VOTE_DISK                      DISMOUNTED           0          0
+
+SQL> 
+
+
+SQL> ! df -h
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda1              15G  2.8G   11G  21% /
+/dev/mapper/vol_u01-lvol_u01
+                       20G   14G  5.3G  72% /u01
+/dev/mapper/vol_soft-lvol_soft
+                      9.7G  1.1G  8.2G  12% /software
+tmpfs                1005M  458M  548M  46% /dev/shm
+/dev/hdc              3.4G  3.4G     0 100% /repo
+/dev/sdd1             1.0G  497M  528M  49% /archive
+/dev/asm/acfsarc-203  512M  116M  397M  23% /acfsarch
+/dev/asm/asfsarch-395
+                      800M  189M  612M  24% /u01/app/grid/acfsmounts/arch
+
+SQL> 
+
+
+SQL> alter diskgroup ORAARCH add disk 'ORCL:ASMARCH3';
+
+Diskgroup altered.
+
+SQL> select name, state, total_mb,free_mb from v$asm_diskgroup;
+
+NAME                           STATE         TOTAL_MB    FREE_MB
+------------------------------ ----------- ---------- ----------
+CRS_VOTE                       MOUNTED           2046       1640
+ORAARCH                        MOUNTED           3069       2127
+ORADATA                        MOUNTED           6138       2967
+ORAFRA                         MOUNTED           2046        827
+VOTE_DISK                      DISMOUNTED           0          0
+
+SQL> 
+
+
+[root@node1 ~]# df -h
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda1              15G  2.8G   11G  21% /
+/dev/mapper/vol_u01-lvol_u01
+                       20G   14G  5.3G  72% /u01
+/dev/mapper/vol_soft-lvol_soft
+                      9.7G  1.1G  8.2G  12% /software
+tmpfs                1005M  459M  547M  46% /dev/shm
+/dev/hdc              3.4G  3.4G     0 100% /repo
+/dev/sdd1             1.0G  497M  528M  49% /archive
+/dev/asm/acfsarc-203  512M  116M  397M  23% /acfsarch
+/dev/asm/asfsarch-395
+                      2.0G  191M  1.9G  10% /u01/app/grid/acfsmounts/arch
+[root@node1 ~]# 
+
+[root@node2 ~]# df -h
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda1              15G  2.9G   11G  22% /
+/dev/mapper/vol_u01-lvol_u01
+                       20G   18G  866M  96% /u01
+/dev/mapper/vol_soft-lvol_soft
+                      9.7G  7.3G  2.0G  79% /software
+tmpfs                1005M  415M  591M  42% /dev/shm
+/dev/hdc              3.4G  3.4G     0 100% /repo
+/dev/sdd1             1.0G  497M  528M  49% /archive
+/dev/asm/acfsarc-203  512M  116M  397M  23% /acfsarch
+/dev/asm/asfsarch-395
+                      2.0G  191M  1.9G  10% /u01/app/grid/acfsmounts/arch
+[root@node2 ~]# 
+
+
+/dev/iscsi/arch3/part
+192.168.179.112:3260,1 iqn.2006-01.com.openfiler:racdb.arch3
+
+iscsiadm -m node -T iqn.2006-01.com.openfiler:racdb.arch3 -p 192.168.179.112 -l
+
+iqn.2006-01.com.openfiler:racdb.arch3 
+
+racdb-arch2
+
+iscsiadm -m discovery -t sendtargets -p openfiler1-priv
+
+iscsiadm -m discovery -t sendtargets -p 192.168.179.112
+
+/sbin/acfsutil size +2G -d /dev/asm/vol_rpts-340 /apps/oracle/acfsmounts/data_vol_rpts
+acfsutil size: new file system size: 5368709120 (5120MB)
+
