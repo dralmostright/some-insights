@@ -40,3 +40,7 @@ https://blog.toadworld.com/2017/04/12/oracle-compressed-tables
 https://www.oracle.com/a/tech/docs/advanced-compression-poc-insights.pdf
 https://www.oracle.com/technetwork/database/options/compression/advanced-compression-datasheet-134474.pdf
 Master Note for OLTP Compression (Doc ID 1223705.1)
+
+
+==Check System stats:
+select * from sys.aux_stats$;
